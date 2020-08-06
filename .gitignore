@@ -1,8 +1,9 @@
 # my notes
 *.txt
 
-# dependencies
-/node_modules
+# Node build artifacts
+node_modules
+npm-debug.log
 
 # testing
 /coverage

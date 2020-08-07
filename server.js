@@ -13,7 +13,7 @@ async function connect() {
 	try {
 		await pool.connect()
 	}
-	catch(e) {
+	catch (e) {
 		console.error(`Failed to connect ${e}`)
 	}
 }
@@ -23,7 +23,7 @@ async function connect() {
 app.use(express.static(path.join(__dirname, 'client/build')))
 
 app.get('/hello', (req, res) => {
-	res.send({ 'hello':'Hello World!'})
+	res.send({ 'hello': 'Hello World!' })
 })
 
 // Routes
@@ -38,7 +38,7 @@ app.post('/api/registration', async (req, res) => {
 	try {
 		const reqJson = req.body;
 		result.success = await registration(reqJson);
-	} catch(e) {
+	} catch (e) {
 		console.log(e)
 		result.success = false;
 	} finally {
@@ -59,7 +59,7 @@ async function registration(userData) {
 	try {
 		await pool.query('INSERT INTO users (uname, pword, email, is_admin) VALUES ($1, $2, $3, $4)', [username, password, email, is_admin]);
 		return true;
-	} catch(e) {
+	} catch (e) {
 		console.log(e);
 		return false;
 	}
@@ -69,7 +69,7 @@ async function get_users() {
 	try {
 		const results = await pool.query('SELECT * FROM users');
 		return results.rows;
-	} catch(e) {
+	} catch (e) {
 		return [];
 	}
 }

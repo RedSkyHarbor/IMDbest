@@ -28,6 +28,8 @@ app.get('/hello', (req, res) => {
 
 // Routes
 app.post('/api/registration', async (req, res) => {
+	// TODO input validation with NPM package JOI
+	// if fails validation status code 400 Bad Request
 	let result = {}
 	try {
 		const reqJson = req.body;
@@ -43,8 +45,9 @@ app.post('/api/registration', async (req, res) => {
 app.get('/api/movie/:id?', async (req, res) => {
 	let rows;
 	if (req.params.id) {
-		movieId = parseInt(req.params.id);
+		let movieId = parseInt(req.params.id);
 		rows = await get_movie(movieId);
+		// TODO if rows empty return status 404 and send `A movie with the id:${movieId} was not found`
 	} else {
 		rows = await get_movies();
 	}
@@ -74,6 +77,7 @@ async function registration(userData) {
 	let { username, password, email, is_admin } = userData;
 	try {
 		await pool.query('INSERT INTO users (uname, pword, email, is_admin) VALUES ($1, $2, $3, $4)', [username, password, email, is_admin]);
+		// TODO return the object that was inserted (without the password)
 		return true;
 	} catch (e) {
 		// TODO If the insert fails, tell the user WHY it failed instead of false, but DONT send them e
@@ -86,6 +90,7 @@ async function create_movie(movieData) {
 	let { title, slug, genres, release_date, length, fcc_rating, picture_url, summary } = movieData;
 	try {
 		await pool.query('INSERT INTO movies (title, slug, genres, release_date, length, fcc_rating, picture_url, summary) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [title, slug, genres, release_date, length, fcc_rating, picture_url, summary]);
+		// TODO return the object that was inserted
 		return true;
 	} catch (e) {
 		// TODO If insert fails tell user WHY. Is a movie with this title already in the DB?

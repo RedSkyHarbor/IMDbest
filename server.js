@@ -27,19 +27,12 @@ app.get('/hello', (req, res) => {
 })
 
 // Routes
-app.get('/api/get_users', async (req, res) => {
-	const rows = await get_users();
-	res.header('content-type', 'application/json');
-	res.send(JSON.stringify(rows));
-})
-
 app.post('/api/registration', async (req, res) => {
 	let result = {}
 	try {
 		const reqJson = req.body;
 		result.success = await registration(reqJson);
 	} catch (e) {
-		console.log(e)
 		result.success = false;
 	} finally {
 		res.header('content-type', 'application/json');
@@ -47,11 +40,20 @@ app.post('/api/registration', async (req, res) => {
 	}
 })
 
+app.get('/api/movie/:id?', async (req, res) => {
+	let rows;
+	if (req.params.id) {
+		rows = await get_movie(req.params.id);
+	} else {
+		rows = await get_movies();
+	}
+	res.header('content-type', 'application/json');
+	res.send(JSON.stringify(rows));
+})
 
 app.listen(port, () => {
 	console.log(`Express server is listening on port ${port}`);
 })
-
 
 // Handlers
 async function registration(userData) {
@@ -60,14 +62,24 @@ async function registration(userData) {
 		await pool.query('INSERT INTO users (uname, pword, email, is_admin) VALUES ($1, $2, $3, $4)', [username, password, email, is_admin]);
 		return true;
 	} catch (e) {
-		console.log(e);
+		// TODO If the insert fails, tell the user WHY it failed instead of false, but DONT send them e
 		return false;
 	}
 }
 
-async function get_users() {
+async function get_movies() {
 	try {
-		const results = await pool.query('SELECT * FROM users');
+		// TODO this query is undounded
+		const results = await pool.query('SELECT * FROM movies');
+		return results.rows;
+	} catch (e) {
+		return [];
+	}
+}
+
+async function get_movie(movieId) {
+	try {
+		const results = await pool.query('SELECT * FROM movies WHERE id=$1', [movieId]);
 		return results.rows;
 	} catch (e) {
 		return [];

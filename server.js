@@ -51,6 +51,19 @@ app.get('/api/movie/:id?', async (req, res) => {
 	res.send(JSON.stringify(rows));
 })
 
+app.post('/api/movie', async (req, res) => {
+	let result = {}
+	try {
+		const reqJson = req.body;
+		result.success = await create_movie(reqJson);
+	} catch (e) {
+		result.success = false
+	} finally {
+		res.header('content-type', 'application/json');
+		res.send(JSON.stringify(result));
+	}
+})
+
 app.listen(port, () => {
 	console.log(`Express server is listening on port ${port}`);
 })
@@ -63,6 +76,18 @@ async function registration(userData) {
 		return true;
 	} catch (e) {
 		// TODO If the insert fails, tell the user WHY it failed instead of false, but DONT send them e
+		return false;
+	}
+}
+
+
+async function create_movie(movieData) {
+	let { title, slug, genres, release_date, length, fcc_rating, picture_url, summary } = movieData;
+	try {
+		await pool.query('INSERT INTO movies (title, slug, genres, release_date, length, fcc_rating, picture_url, summary) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [title, slug, genres, release_date, length, fcc_rating, picture_url, summary]);
+		return true;
+	} catch (e) {
+		// TODO If insert fails tell user WHY. Is a movie with this title already in the DB?
 		return false;
 	}
 }

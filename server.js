@@ -43,7 +43,8 @@ app.post('/api/registration', async (req, res) => {
 app.get('/api/movie/:id?', async (req, res) => {
 	let rows;
 	if (req.params.id) {
-		rows = await get_movie(req.params.id);
+		movieId = parseInt(req.params.id);
+		rows = await get_movie(movieId);
 	} else {
 		rows = await get_movies();
 	}

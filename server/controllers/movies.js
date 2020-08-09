@@ -28,7 +28,7 @@ const searchMovie = async (req, res) => {
     const matched = await validator.check();
 
     if (!matched) {
-        res.status(400).send(validator.errors);
+        res.status(422).send(validator.errors);
         return;
     }
 
@@ -49,14 +49,14 @@ const postMovie = async (req, res) => {
         release_date: 'required|string|minLength:10|maxLength:64',
         length: 'required|string|minLength:2|maxLength:64',
         fcc_rating: 'required|string|maxLength:5',
-        picture_url: 'required|string|maxLength:255',
+        picture_url: 'required|url|maxLength:255',
         summary: 'required|string|maxLength:511'
     });
 
     const matched = await validator.check();
 
     if (!matched) {
-        res.status(400).send(validator.errors);
+        res.status(422).send(validator.errors);
         return;
     }
 

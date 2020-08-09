@@ -13,7 +13,7 @@ const postRegistration = async (req, res) => {
     const matched = await validator.check();
 
     if (!matched) {
-        res.status(400).send(validator.errors);
+        res.status(422).send(validator.errors);
         return;
     }
 

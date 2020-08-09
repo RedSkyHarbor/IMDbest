@@ -1,18 +1,18 @@
-const express = require('express')
-const path = require('path')
+const express = require('express');
+const path = require('path');
 
 // Require routes
 const index = require('./routes/index');
 const movies = require('./routes/movies');
 const sessions = require('./routes/sessions');
 
-const port = process.env.PORT || 5000
-const app = express()
+const port = process.env.PORT || 5000;
+const app = express();
 
-app.use(express.json())
+app.use(express.json());
 
 // Serve static files from the React app
-app.use(express.static(path.join(__dirname, 'client/build')))
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 //Routes
 app.use('/', index);

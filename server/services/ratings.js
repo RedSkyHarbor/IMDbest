@@ -1,5 +1,14 @@
 const { pool } = require('./database-config');
 
+async function get_ratings(movieId) {
+    try {
+        const results = await pool.query('SELECT * FROM ratings WHERE movieId=$1', [movieId]);
+        return results.rows;
+    } catch (e) {
+        return [];
+    }
+}
+
 async function post_rating(movieId, userId, comment, rating) {
     try {
         const results = await pool.query('INSERT INTO ratings (movieId, userId, comment, rating) VALUES ($1,$2,$3,$4) RETURNING *', [movieId, userId, comment, rating]);
@@ -10,5 +19,6 @@ async function post_rating(movieId, userId, comment, rating) {
 }
 
 module.exports = {
+    get_ratings,
     post_rating
 }

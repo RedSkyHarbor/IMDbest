@@ -1,8 +1,17 @@
 const { Validator } = require('node-input-validator');
-const { post_rating } = require('../services/ratings');
+const { post_rating, get_ratings } = require('../services/ratings');
 
 // TODO delete rating, get ratings for a movie, update rating
 // TODO make sure user doesnt have two ratings for same movie
+
+
+
+const getRatings = async (req, res) => {
+    const { movieId } = req.params;
+    const rows = await get_ratings(parseInt(movieId));
+    res.header('content-type', 'application/json');
+    res.send(JSON.stringify(rows));
+}
 
 const postRating = async (req, res) => {
 
@@ -41,5 +50,6 @@ const postRating = async (req, res) => {
 }
 
 module.exports = {
+    getRatings,
     postRating
 }

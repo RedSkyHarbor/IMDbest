@@ -1,8 +1,8 @@
 const express = require('express');
-const sessionController = require('../controllers/sessions');
+const { postRegistration } = require('../controllers/sessions');
 const router = express.Router();
 
-router.post('/registration', sessionController.postRegistration);
+router.post('/registration', postRegistration);
 
 // TODO log in, log out
 

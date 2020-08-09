@@ -18,6 +18,18 @@ const getMovie = async (req, res) => {
 
 /* search for movies by title */
 const searchMovie = async (req, res) => {
+
+    const validator = new Validator(req.body, {
+        title: 'required|string|maxLength:128'
+    });
+
+    const matched = await validator.check();
+
+    if (!matched) {
+        res.status(400).send(validator.errors);
+        return;
+    }
+
     const { title } = req.params;
     const rows = await search_movie(title);
     res.header('content-type', 'application/json');

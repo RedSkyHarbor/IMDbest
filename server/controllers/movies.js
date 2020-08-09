@@ -1,6 +1,8 @@
 const { Validator } = require('node-input-validator');
 const { get_movies, get_movie, search_movie, create_movie } = require('../services/movies');
 
+// TODO delete movie, update movie
+
 /* gets all movies */
 const getMovies = async (req, res) => {
     const rows = await get_movies();

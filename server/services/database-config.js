@@ -5,6 +5,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 console.log('is this production? ', isProduction);
 
+// TODO read from env variables
 const connectionString = 'postgresql://jessebreuer-penello@localhost:5432/imdbest';
 
 const pool = new Pool({

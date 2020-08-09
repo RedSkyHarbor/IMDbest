@@ -1,4 +1,4 @@
-const { pool } = require('../server-config');
+const { pool } = require('./database-config');
 
 async function get_movies() {
     try {

@@ -1,8 +1,5 @@
 const { Validator } = require('node-input-validator');
-const { get_ratings, get_rating, post_rating } = require('../services/ratings');
-
-// TODO admin delete rating, update rating
-// TODO make sure user doesnt have two ratings for same movie
+const { get_ratings, get_rating, post_rating, update_rating } = require('../services/ratings');
 
 /* get all ratings for a particular movie */
 const getRatings = async (req, res) => {
@@ -38,7 +35,7 @@ const postRating = async (req, res) => {
     }
 
     if (req.body.rating < 0 || req.body.rating > 10) {
-        res.status(422).send('rating must be between 0 and 10');
+        res.status(422).send('Rating must be between 0 and 10.');
         return;
     }
 
@@ -57,8 +54,42 @@ const postRating = async (req, res) => {
 
 }
 
+const updateRating = async (req, res) => {
+    const { movieId, userId } = req.params;
+
+    const validator = new Validator(req.body, {
+        comment: 'required|string|minLength:3|maxLength:2055',
+        rating: 'required|decimal'
+    });
+
+    const matched = await validator.check();
+
+    if (!matched) {
+        res.status(422).send(validator.errors);
+        return;
+    }
+
+    if (req.body.rating < 0 || req.body.rating > 10) {
+        res.status(422).send('Rating must be between 0 and 10.');
+        return;
+    }
+
+    let result = {}
+    try {
+        const { comment, rating } = req.body;
+        result.response = await update_rating(movieId, userId, comment, rating);
+    } catch (e) {
+        result.response = false;
+        res.status(400);
+    } finally {
+        res.header('content-type', 'application/json');
+        res.send(JSON.stringify(result));
+    }
+}
+
 module.exports = {
     getRatings,
     getRating,
-    postRating
+    postRating,
+    updateRating
 }

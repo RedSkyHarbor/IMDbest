@@ -27,8 +27,18 @@ async function post_rating(movieId, userId, comment, rating) {
     }
 }
 
+async function update_rating(movieId, userId, comment, rating) {
+    try {
+        const results = await pool.query('UPDATE ratings SET comment=$1, rating=$2 WHERE movieId=$3 AND userId=$4 RETURNING *', [comment, rating, movieId, userId]);
+        return results.rows;
+    } catch (e) {
+        return false;
+    }
+}
+
 module.exports = {
     get_ratings,
     get_rating,
-    post_rating
+    post_rating,
+    update_rating
 }

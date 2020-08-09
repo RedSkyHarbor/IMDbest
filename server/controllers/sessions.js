@@ -4,8 +4,8 @@ const { registration } = require('../services/sessions');
 const postRegistration = async (req, res) => {
 
     const validator = new Validator(req.body, {
-        username: 'required|minLength:3|maxLength:31',
-        password: 'required|minLength:5|maxLength:256',
+        username: 'required|string|minLength:3|maxLength:31',
+        password: 'required|string|minLength:5|maxLength:256',
         email: 'required|email|maxLength:64',
         is_admin: 'required|boolean'
     });

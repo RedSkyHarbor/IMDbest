@@ -33,13 +33,14 @@ const searchMovie = async (req, res) => {
 /* create a new movie */
 const postMovie = async (req, res) => {
     // TODO should require authentication, only admins can do this
-    // TODO Status code
     let result = {}
     try {
-        const reqJson = req.body;
-        result.success = await create_movie(reqJson);
+        const { title, slug, genres, release_date, length, fcc_rating, picture_url, summary } = await req.body;
+        result.response = await create_movie(title, slug, genres, release_date, length, fcc_rating, picture_url, summary);
+        res.status(200);
     } catch (e) {
-        result.success = false;
+        res.status(400);
+        result.response = false;
     } finally {
         res.header('content-type', 'application/json');
         res.send(JSON.stringify(result));

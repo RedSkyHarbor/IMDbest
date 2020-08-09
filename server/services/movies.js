@@ -33,14 +33,15 @@ async function search_movie(partialTitle) {
     }
 }
 
-async function create_movie(movieData) {
-    let { title, slug, genres, release_date, length, fcc_rating, picture_url, summary } = movieData;
+async function create_movie(title, slug, genres, release_date, length, fcc_rating, picture_url, summary) {
     try {
-        await pool.query('INSERT INTO movies (title, slug, genres, release_date, length, fcc_rating, picture_url, summary) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [title, slug, genres, release_date, length, fcc_rating, picture_url, summary]);
-        // TODO return the object that was inserted
-        return true;
+        const results = await pool.query('INSERT INTO movies (title, slug, genres, release_date, length, fcc_rating, picture_url, summary) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *', [title, slug, genres, release_date, length, fcc_rating, picture_url, summary]);
+        return results.rows;
     } catch (e) {
-        // TODO If insert fails tell user WHY. Is a movie with this title already in the DB?
+        console.log(`create_movie error: ${e}, error code: ${e.code}`);
+        if (e.code === '23505') {
+            return `A movie with the title ${title} already exists`;
+        }
         return false;
     }
 }

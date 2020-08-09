@@ -3,10 +3,7 @@ const { get_movies, get_movie, search_movie, create_movie } = require('../servic
 // TODO input validation with JOI
 
 /* gets all movies */
-// TODO Maybe should be in the index route
 const getMovies = async (req, res) => {
-    // TODO Status code
-    // TODO pagination
     const rows = await get_movies();
     res.header('content-type', 'application/json');
     res.send(JSON.stringify(rows));
@@ -14,15 +11,13 @@ const getMovies = async (req, res) => {
 
 /* gets movie with specific id */
 const getMovie = async (req, res) => {
-    // TODO if row empty return status 404 and send `A movie with the id:${movieId} was not found`
-    //TODO Status code
-    const row = await get_movie(parseInt(req.params.id));
+    const { id } = req.params;
+    const row = await get_movie(parseInt(id));
     res.header('content-type', 'application/json');
     res.send(JSON.stringify(row));
 }
 
-/* search for movies by title*/
-// TODO order by rating
+/* search for movies by title */
 const searchMovie = async (req, res) => {
     const { title } = req.params;
     const rows = await search_movie(title);

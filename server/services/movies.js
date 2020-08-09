@@ -2,11 +2,10 @@ const { pool } = require('./database-config');
 
 async function get_movies() {
     try {
-        // TODO this query is undounded
+        // TODO this query is undounded, at some point add pagination
         const results = await pool.query('SELECT * FROM movies');
         return results.rows;
     } catch (e) {
-        // TODO more specific error response
         return [];
     }
 }
@@ -16,7 +15,6 @@ async function get_movie(movieId) {
         const results = await pool.query('SELECT * FROM movies WHERE id=$1', [movieId]);
         return results.rows;
     } catch (e) {
-        // TODO more specific error response "Movie with this id not found"
         return [];
     }
 }
@@ -26,7 +24,6 @@ async function search_movie(partialTitle) {
         const results = await pool.query('SELECT * FROM movies WHERE title ILIKE $1', ['%' + partialTitle + '%']);
         return results.rows;
     } catch (e) {
-        // TODO more specific error response
         return [];
     }
 }

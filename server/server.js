@@ -11,17 +11,6 @@ const app = express()
 
 app.use(express.json())
 
-connect()
-async function connect() {
-	// Connect to database
-	try {
-		await pool.connect()
-	}
-	catch (e) {
-		console.error(`Failed to connect ${e}`)
-	}
-}
-
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')))
 

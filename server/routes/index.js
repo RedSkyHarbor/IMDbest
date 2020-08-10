@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const { getMovieCardData } = require('../controllers/index');
 
-router.get('/', (req, res) => {
-    res.send({ 'hello': 'Hello World!' })
-});
+router.get('/', getMovieCardData);
 
 module.exports = router;

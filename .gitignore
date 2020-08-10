@@ -1,6 +1,9 @@
 # my notes
 *.txt
 
+# psql tables and commands
+*.sql
+
 # Node build artifacts
 node_modules
 npm-debug.log

@@ -19,11 +19,18 @@ async function get_movie(movieId) {
     }
 }
 
-async function search_movie(partialTitle) {
+async function search_movie(partialTitle, order) {
     try {
-        const results = await pool.query('SELECT * FROM movies WHERE title ILIKE $1', ['%' + partialTitle + '%']);
+        console.log(partialTitle, order);
+        let results;
+        if (order == 'asc') {
+            results = await pool.query('SELECT title, picture_url, avg(rating) FROM movies INNER JOIN ratings on movies.id = ratings.movieId WHERE title ILIKE $1 GROUP BY title, picture_url ORDER BY avg(rating) ASC', ['%' + partialTitle + '%']);
+        } else if (order == 'desc') {
+            results = await pool.query('SELECT title, picture_url, avg(rating) FROM movies INNER JOIN ratings on movies.id = ratings.movieId WHERE title ILIKE $1 GROUP BY title, picture_url ORDER BY avg(rating) DESC', ['%' + partialTitle + '%']);
+        }
         return results.rows;
     } catch (e) {
+        console.log(e);
         return [];
     }
 }

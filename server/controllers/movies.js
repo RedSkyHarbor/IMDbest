@@ -18,22 +18,14 @@ const getMovie = async (req, res) => {
     res.send(JSON.stringify(row));
 }
 
-/* search for movies by title */
+/* search for movies by title and order by its rating */
 const searchMovie = async (req, res) => {
 
-    const validator = new Validator(req.body, {
-        title: 'required|string|maxLength:128'
-    });
+    let { orderByRating } = req.query
+    let { title } = req.params;
+    if (title === undefined) { title = ''; }
 
-    const matched = await validator.check();
-
-    if (!matched) {
-        res.status(422).send(validator.errors);
-        return;
-    }
-
-    const { title } = req.params;
-    const rows = await search_movie(title);
+    const rows = await search_movie(title, orderByRating);
     res.header('content-type', 'application/json');
     res.send(JSON.stringify(rows));
 }

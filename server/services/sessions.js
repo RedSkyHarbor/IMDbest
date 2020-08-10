@@ -28,7 +28,7 @@ async function log_in(username, plaintext_password, is_admin) {
             const { id, username, is_admin } = results.rows[0];
             return { id, username, is_admin };
         } else {
-            return 'Log in failed.'
+            return false;
         }
     } catch (e) {
         return false;

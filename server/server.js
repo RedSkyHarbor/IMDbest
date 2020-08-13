@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "client/build")));
 
 //Routes
-app.use("/", index);
+app.use("/api", index);
 app.use("/api/movies", movies);
 app.use("/api/sessions", sessions);
 app.use("/api/ratings", ratings);

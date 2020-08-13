@@ -1,35 +1,13 @@
-import React, { Component } from 'react';
+import React from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { IndexPage } from "./pages/IndexPage";
 
-class App extends Component {
-  state = {
-    res: [],
-    test: 'test'
-  }
-
-  componentDidMount() {
-    this.query()
-  }
-
-  query = () => {
-    // Get hello world
-    fetch('/hello')
-      .then(res => res.json())
-      .then(json => this.setState({ res: json['hello'] }))
-      .catch(err => {
-        console.log(err);
-      });
-  }
-
-  render() {
-    const { res } = this.state
-    const { test } = this.state
-    return (
-      <div>
-        <div>{res}</div>
-        <div>{test}</div>
-      </div>
-    )
-  }
-}
+const App: React.FC = () => {
+  return (
+    <Router>
+      <Route path="/" exact component={IndexPage} />
+    </Router>
+  );
+};
 
 export default App;

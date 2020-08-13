@@ -14,9 +14,23 @@ export const MovieCards: React.FC = () => {
       method: "GET",
     })
       .then((res) => res.json())
-      .then((json) => console.log(json))
+      .then((json) => setMovies(json))
       .catch((err) => console.error(err));
   });
 
-  return <div>Movie Cards</div>;
+  return (
+    <div>
+      {movies.map((movie) => (
+        <div key={movie.title}>
+          <img
+            style={{ width: "300px" }}
+            src={movie.picture_url}
+            alt="movie poster"
+          />
+          <p>{movie.title}</p>
+          <p>{movie.avg.toString().substr(0, 4)}</p>
+        </div>
+      ))}
+    </div>
+  );
 };

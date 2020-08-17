@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Login } from "../components/registration/Login";
 
 interface Movie {
   id: number;
@@ -31,6 +32,7 @@ export const MoviePage: React.FC = () => {
 
   return (
     <>
+      <Login />
       {movie.map((movie) => (
         <div key={movie.id}>
           <h1>{movie.title}</h1>

@@ -29,20 +29,51 @@ export const SignUpForm: React.FC = () => {
 
   return (
     <form onSubmit={onSubmit}>
+      <h1>Sign up</h1>
       <label htmlFor="username">Username</label>
-      <input name="username" ref={register({ required: true })} />
-      {errors.username && "Username is required"}
+      <input
+        name="username"
+        ref={register({ required: true, minLength: 3, maxLength: 31 })}
+      />
+      {errors.username && errors.username.type === "required" && (
+        <p>Username is required</p>
+      )}
+      {errors.username && errors.username.type === "minLength" && (
+        <p>Username must be at least 3 characters</p>
+      )}
+      {errors.username && errors.username.type === "maxLength" && (
+        <p>Username must be less than 31 characters</p>
+      )}
+      <br />
       <label htmlFor="email">Email</label>
-      <input name="email" ref={register({ required: true })} type="email" />
-      {errors.email && "Email is required"}
+      <input
+        name="email"
+        ref={register({ required: true, maxLength: 64 })}
+        type="email"
+      />
+      {errors.email && errors.email.type === "required" && (
+        <p>Email is required</p>
+      )}
+      {errors.email && errors.email.type === "maxLength" && (
+        <p>Email must be less than 64 characters</p>
+      )}
+      <br />
       <label htmlFor="password">Password</label>
       <input
         name="password"
-        ref={register({ required: true })}
+        ref={register({ required: true, minLength: 5, maxLength: 256 })}
         type="password"
       />
-      {errors.password && "Password is required"}
-
+      {errors.password && errors.password.type === "required" && (
+        <p>Password is required</p>
+      )}
+      {errors.password && errors.password.type === "minLength" && (
+        <p>Password must be at least 5 characters</p>
+      )}
+      {errors.password && errors.password.type === "maxLength" && (
+        <p>Password must be less than 256 characters</p>
+      )}
+      <br />
       <button type="submit">Sign Up</button>
     </form>
   );

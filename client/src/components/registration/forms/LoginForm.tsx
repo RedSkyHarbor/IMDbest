@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface FormData {
@@ -8,7 +8,9 @@ interface FormData {
 
 export const LoginForm: React.FC = () => {
   const { register, handleSubmit, errors } = useForm<FormData>();
-  // TODO Handle response
+  const [response, setResponse] = useState<boolean>(true);
+
+  // TODO On sucessful login, redirect to last page in history
   const onSubmit = handleSubmit(({ username, password }) => {
     fetch("/api/sessions/login", {
       headers: { "Content-Type": "application/json" },
@@ -20,13 +22,14 @@ export const LoginForm: React.FC = () => {
       }),
     })
       .then((res) => res.json())
-      .then((json) => console.log(json))
+      .then((json) => setResponse(json.response))
       .catch((err) => console.error(err));
   });
 
   return (
     <form onSubmit={onSubmit}>
       <h1>Log in</h1>
+      {response === false ? <p>Account not found</p> : null}
       <label htmlFor="username">Username</label>
       <input
         name="username"

@@ -9,8 +9,22 @@ interface FormData {
 
 export const SignUpForm: React.FC = () => {
   const { register, handleSubmit, errors } = useForm<FormData>();
+
   const onSubmit = handleSubmit(({ username, email, password }) => {
-    console.log(username, email, password);
+    // TODO handle response by storing in Context?
+    fetch("/api/sessions/registration", {
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+      body: JSON.stringify({
+        username: username,
+        password: password,
+        email: email,
+        is_admin: false,
+      }),
+    })
+      .then((res) => res.json())
+      .then((json) => console.log(json))
+      .catch((err) => console.log(err));
   });
 
   return (

@@ -6,9 +6,22 @@ interface FormData {
   password: string;
 }
 
+interface SuccessfulResponse {
+  id: number;
+  username: string;
+  is_admin: boolean;
+}
+
 export const LoginForm: React.FC = () => {
   const { register, handleSubmit, errors } = useForm<FormData>();
-  const [response, setResponse] = useState<boolean>(true);
+  const [showNoLoginFound, setNoLoginFound] = useState<boolean>(false);
+
+  const handleResponse = (json: SuccessfulResponse | boolean) => {
+    if (json === false) {
+      setNoLoginFound(true);
+    }
+    // TODO redirect to previous page, remove this page from history, get JWT, etc
+  };
 
   // TODO On sucessful login, redirect to last page in history
   const onSubmit = handleSubmit(({ username, password }) => {
@@ -22,14 +35,14 @@ export const LoginForm: React.FC = () => {
       }),
     })
       .then((res) => res.json())
-      .then((json) => setResponse(json.response))
+      .then((json) => handleResponse(json.response))
       .catch((err) => console.error(err));
   });
 
   return (
     <form onSubmit={onSubmit}>
       <h1>Log in</h1>
-      {response === false ? <p>Account not found</p> : null}
+      {showNoLoginFound === true ? <p>Account not found</p> : null}
       <label htmlFor="username">Username</label>
       <input
         name="username"

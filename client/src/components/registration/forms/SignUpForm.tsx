@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface FormData {
@@ -7,11 +7,26 @@ interface FormData {
   password: string;
 }
 
+interface SuccessfulResponse {
+  id: number;
+  username: string;
+  is_admin: boolean;
+}
+
 export const SignUpForm: React.FC = () => {
   const { register, handleSubmit, errors } = useForm<FormData>();
+  const [showErr, setErr] = useState<string>("");
+
+  const handleResponse = (json: SuccessfulResponse | string) => {
+    if (typeof json === "string") {
+      setErr(json);
+    }
+    // TODO redirect to previous page, remove this page from history, get JWT, etc
+  };
 
   const onSubmit = handleSubmit(({ username, email, password }) => {
     // TODO handle response by storing in Context?
+    setErr("");
     fetch("/api/sessions/registration", {
       headers: { "Content-Type": "application/json" },
       method: "POST",
@@ -23,13 +38,14 @@ export const SignUpForm: React.FC = () => {
       }),
     })
       .then((res) => res.json())
-      .then((json) => console.log(json))
+      .then((json) => handleResponse(json.response))
       .catch((err) => console.log(err));
   });
 
   return (
     <form onSubmit={onSubmit}>
       <h1>Sign up</h1>
+      {showErr === "" ? null : <p>{showErr}</p>}
       <label htmlFor="username">Username</label>
       <input
         name="username"

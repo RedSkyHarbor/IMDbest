@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 interface FormData {
@@ -21,6 +22,7 @@ interface SuccessfulLogin {
 export const LoginForm: React.FC = () => {
   const { register, handleSubmit, errors } = useForm<FormData>();
   const [showNoLoginFound, setNoLoginFound] = useState<boolean>(false);
+  const history = useHistory();
 
   const handleResponse = (
     headers: any,
@@ -31,11 +33,10 @@ export const LoginForm: React.FC = () => {
       setNoLoginFound(true);
     } else {
       localStorage.setItem("auth-token", headers.get("auth-token"));
+      history.replace("/");
     }
-    // TODO redirect to previous page
   };
 
-  // TODO On sucessful login, redirect to last page in history
   const onSubmit = handleSubmit(({ username, password }) => {
     setNoLoginFound(false);
     fetch("/api/sessions/login", {

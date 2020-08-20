@@ -15,6 +15,7 @@ const postRegistration = async (req, res) => {
   const matched = await validator.check();
 
   if (!matched) {
+    // TODO send ALL errors not just the one that fails first
     res.status(422).send(validator.errors);
     return;
   }
@@ -48,6 +49,7 @@ const login = async (req, res) => {
   const matched = await validator.check();
 
   if (!matched) {
+    // TODO send ALL errors not just the one that fails first
     res.status(422).send(validator.errors);
     return;
   }

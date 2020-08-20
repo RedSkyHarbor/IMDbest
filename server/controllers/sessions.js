@@ -1,5 +1,6 @@
 const { Validator } = require("node-input-validator");
 const { registration, log_in } = require("../services/sessions");
+const jwt = require("jsonwebtoken");
 
 // TODO force usernames to be lowercase on account creation and log in
 
@@ -22,6 +23,13 @@ const postRegistration = async (req, res) => {
   try {
     let { username, password, email, is_admin } = await req.body;
     result.response = await registration(username, password, email, is_admin);
+    if (result.response[0].id) {
+      const token = jwt.sign(
+        { _id: result.response[0].id },
+        process.env.MOVIES_TOKEN_SECRET
+      );
+      res.header("auth-token", token);
+    }
   } catch (e) {
     result.response = false;
   } finally {
@@ -48,6 +56,13 @@ const login = async (req, res) => {
   try {
     const { username, password, is_admin } = await req.body;
     result.response = await log_in(username, password, is_admin);
+    if (result.response.id) {
+      const token = jwt.sign(
+        { _id: result.response.id },
+        process.env.MOVIES_TOKEN_SECRET
+      );
+      res.header("auth-token", token);
+    }
   } catch (e) {
     result.response = false;
   } finally {

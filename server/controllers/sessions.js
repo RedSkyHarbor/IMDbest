@@ -56,9 +56,8 @@ const login = async (req, res) => {
   }
 };
 
-// TODO research if this is secure
+// TODO
 const logout = async (req, res) => {
-  res.clearCookie("logged_in");
   res.status(200).send("Logged out.");
 };
 

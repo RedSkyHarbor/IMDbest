@@ -1,5 +1,7 @@
 const express = require("express");
+const verify = require("../auth/verifyToken");
 const router = express.Router();
+
 const {
   getRatings,
   getRating,
@@ -9,7 +11,7 @@ const {
 
 router.get("/:movieId", getRatings);
 router.get("/:movieId/:userId", getRating);
-router.post("/", postRating);
-router.put("/:movieId/:userId", updateRating);
+router.post("/", verify, postRating);
+router.put("/:movieId/:userId", verify, updateRating);
 
 module.exports = router;

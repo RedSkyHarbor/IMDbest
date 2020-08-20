@@ -8,9 +8,7 @@ export const Header: React.FC = () => {
     <header>
       <Logo />
       <br />
-      <Login />
-      <br />
-      <Logout />
+      {localStorage.getItem("auth-token") ? <Logout /> : <Login />}
     </header>
   );
 };

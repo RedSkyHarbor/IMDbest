@@ -48,11 +48,6 @@ const login = async (req, res) => {
   try {
     const { username, password, is_admin } = await req.body;
     result.response = await log_in(username, password, is_admin);
-    if (result.response) {
-      // TODO secure cookie https://expressjs.com/en/advanced/best-practice-security.html#use-cookies-securely
-      const expiryDate = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
-      res.cookie("logged_in", "1", { expires: expiryDate });
-    }
   } catch (e) {
     result.response = false;
   } finally {

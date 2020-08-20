@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 interface FormData {
@@ -7,28 +8,45 @@ interface FormData {
   password: string;
 }
 
+interface FailedResponse {
+  response: boolean | string;
+}
+
 interface SuccessfulResponse {
-  id: number;
-  username: string;
-  is_admin: boolean;
+  response: [
+    {
+      id: number;
+      username: string;
+      is_admin: boolean;
+    }
+  ];
 }
 
 export const SignUpForm: React.FC = () => {
   const { register, handleSubmit, errors } = useForm<FormData>();
   const [showValidationErr, setValidationErr] = useState<string>("");
+  const history = useHistory();
 
-  const handleResponse = (json: SuccessfulResponse | string) => {
-    if (typeof json === "string") {
-      setValidationErr(json);
+  const handleResponse = (
+    headers: any,
+    status: number,
+    json: SuccessfulResponse | FailedResponse
+  ) => {
+    if (typeof json.response === "string") {
+      setValidationErr(json.response);
+    } else {
+      localStorage.setItem("auth-token", headers.get("auth-token"));
+      history.replace("/");
     }
-    // TODO redirect to previous page, remove this page from history, get JWT, etc
   };
 
   const onSubmit = handleSubmit(({ username, email, password }) => {
-    // TODO handle response by storing in Context?
     setValidationErr("");
     fetch("/api/sessions/registration", {
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
       method: "POST",
       body: JSON.stringify({
         username: username,
@@ -37,9 +55,17 @@ export const SignUpForm: React.FC = () => {
         is_admin: false,
       }),
     })
-      .then((res) => res.json())
-      .then((json) => handleResponse(json.response))
-      .catch((err) => console.log(err));
+      .then((res) =>
+        res.json().then((json) => ({
+          headers: res.headers,
+          status: res.status,
+          json: json,
+        }))
+      )
+      .then(({ headers, status, json }) =>
+        handleResponse(headers, status, json)
+      )
+      .catch((err) => console.error(err));
   });
 
   return (

@@ -22,18 +22,27 @@ export const LoginForm: React.FC = () => {
   const { register, handleSubmit, errors } = useForm<FormData>();
   const [showNoLoginFound, setNoLoginFound] = useState<boolean>(false);
 
-  const handleResponse = (json: SuccessfulLogin | FailedLogin) => {
+  const handleResponse = (
+    headers: any,
+    status: number,
+    json: SuccessfulLogin | FailedLogin
+  ) => {
     if (json.response === false) {
       setNoLoginFound(true);
+    } else {
+      localStorage.setItem("auth-token", headers.get("auth-token"));
     }
-    // TODO redirect to previous page, remove this page from history, get JWT, etc
+    // TODO redirect to previous page
   };
 
   // TODO On sucessful login, redirect to last page in history
   const onSubmit = handleSubmit(({ username, password }) => {
     setNoLoginFound(false);
     fetch("/api/sessions/login", {
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
       method: "POST",
       body: JSON.stringify({
         username: username,
@@ -41,8 +50,16 @@ export const LoginForm: React.FC = () => {
         is_admin: false,
       }),
     })
-      .then((res) => res.json())
-      .then((json) => handleResponse(json))
+      .then((res) =>
+        res.json().then((json) => ({
+          headers: res.headers,
+          status: res.status,
+          json: json,
+        }))
+      )
+      .then(({ headers, status, json }) =>
+        handleResponse(headers, status, json)
+      )
       .catch((err) => console.error(err));
   });
 

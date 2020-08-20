@@ -15,18 +15,18 @@ interface SuccessfulResponse {
 
 export const SignUpForm: React.FC = () => {
   const { register, handleSubmit, errors } = useForm<FormData>();
-  const [showErr, setErr] = useState<string>("");
+  const [showValidationErr, setValidationErr] = useState<string>("");
 
   const handleResponse = (json: SuccessfulResponse | string) => {
     if (typeof json === "string") {
-      setErr(json);
+      setValidationErr(json);
     }
     // TODO redirect to previous page, remove this page from history, get JWT, etc
   };
 
   const onSubmit = handleSubmit(({ username, email, password }) => {
     // TODO handle response by storing in Context?
-    setErr("");
+    setValidationErr("");
     fetch("/api/sessions/registration", {
       headers: { "Content-Type": "application/json" },
       method: "POST",
@@ -45,7 +45,7 @@ export const SignUpForm: React.FC = () => {
   return (
     <form onSubmit={onSubmit}>
       <h1>Sign up</h1>
-      {showErr === "" ? null : <p>{showErr}</p>}
+      {showValidationErr === "" ? null : <p>{showValidationErr}</p>}
       <label htmlFor="username">Username</label>
       <input
         name="username"

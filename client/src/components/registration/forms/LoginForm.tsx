@@ -6,18 +6,24 @@ interface FormData {
   password: string;
 }
 
-interface SuccessfulResponse {
-  id: number;
-  username: string;
-  is_admin: boolean;
+interface FailedLogin {
+  response: boolean;
+}
+
+interface SuccessfulLogin {
+  response: {
+    id: number;
+    username: string;
+    is_admin: boolean;
+  };
 }
 
 export const LoginForm: React.FC = () => {
   const { register, handleSubmit, errors } = useForm<FormData>();
   const [showNoLoginFound, setNoLoginFound] = useState<boolean>(false);
 
-  const handleResponse = (json: SuccessfulResponse | boolean) => {
-    if (json === false) {
+  const handleResponse = (json: SuccessfulLogin | FailedLogin) => {
+    if (json.response === false) {
       setNoLoginFound(true);
     }
     // TODO redirect to previous page, remove this page from history, get JWT, etc
@@ -25,6 +31,7 @@ export const LoginForm: React.FC = () => {
 
   // TODO On sucessful login, redirect to last page in history
   const onSubmit = handleSubmit(({ username, password }) => {
+    setNoLoginFound(false);
     fetch("/api/sessions/login", {
       headers: { "Content-Type": "application/json" },
       method: "POST",
@@ -35,7 +42,7 @@ export const LoginForm: React.FC = () => {
       }),
     })
       .then((res) => res.json())
-      .then((json) => handleResponse(json.response))
+      .then((json) => handleResponse(json))
       .catch((err) => console.error(err));
   });
 

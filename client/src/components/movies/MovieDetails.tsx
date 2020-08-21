@@ -27,10 +27,14 @@ export const MovieDetails: React.FC = () => {
       .then((res) => res.json())
       .then((json) => setMovie(json))
       .catch((err) => console.log(err));
+
+    return () => {
+      abortController.abort();
+    };
   }, []);
 
   return (
-    <>
+    <section>
       {movie.map((movie) => (
         <div key={movie.id}>
           <h1>{movie.title}</h1>
@@ -41,6 +45,6 @@ export const MovieDetails: React.FC = () => {
           <h2>{movie.summary}</h2>
         </div>
       ))}
-    </>
+    </section>
   );
 };

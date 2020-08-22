@@ -34,13 +34,13 @@ const postRating = async (req, res) => {
   const matched = await validator.check();
 
   if (!matched) {
-    res.status(422).send(validator.errors);
-    return;
+    return res.status(422).send(validator.errors);
   }
 
   if (req.body.rating < 0 || req.body.rating > 10) {
-    res.status(422).send("Rating must be between 0 and 10.");
-    return;
+    return res
+      .status(422)
+      .send(JSON.stringify("Rating must be between 0 and 10."));
   }
 
   let result = {};
@@ -53,7 +53,7 @@ const postRating = async (req, res) => {
     result.response = false;
   } finally {
     res.header("content-type", "application/json");
-    res.send(JSON.stringify(result));
+    return res.send(JSON.stringify(result));
   }
 };
 

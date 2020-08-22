@@ -26,7 +26,11 @@ const postRegistration = async (req, res) => {
     result.response = await registration(username, password, email, is_admin);
     if (result.response[0].id) {
       const token = jwt.sign(
-        { _id: result.response[0].id },
+        {
+          id: result.response[0].id,
+          is_admin: result.response[0].is_admin,
+          username: result.response[0].username,
+        },
         process.env.MOVIES_TOKEN_SECRET
       );
       res.header("auth-token", token);
@@ -60,7 +64,11 @@ const login = async (req, res) => {
     result.response = await log_in(username, password, is_admin);
     if (result.response.id) {
       const token = jwt.sign(
-        { _id: result.response.id },
+        {
+          id: result.response.id,
+          is_admin: result.response.is_admin,
+          username: result.response.username,
+        },
         process.env.MOVIES_TOKEN_SECRET
       );
       res.header("auth-token", token);

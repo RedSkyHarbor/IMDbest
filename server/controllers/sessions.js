@@ -2,8 +2,6 @@ const { Validator } = require("node-input-validator");
 const { registration, log_in } = require("../services/sessions");
 const jwt = require("jsonwebtoken");
 
-// TODO force usernames to be lowercase on account creation and log in
-
 const postRegistration = async (req, res) => {
   const validator = new Validator(req.body, {
     username: "required|string|minLength:3|maxLength:31",

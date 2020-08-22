@@ -6,8 +6,7 @@ export const Logout: React.FC = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("auth-token");
-    localStorage.removeItem("movie_id");
-    history.push("/");
+    history.go(0);
   };
 
   return (

@@ -14,16 +14,18 @@ export const CommentForm: React.FC = () => {
     console.log(comment);
     console.log(rating);
 
+    // TODO Make sure auth-token and movieId is in localstorage before fetch
+    // TODO UserID should not need to be sent fetch, should be decoded on server side from auth token
     fetch("/api/ratings", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("auth-token") as string, // TODO should be in context
+        "auth-token": localStorage.getItem("auth-token") as string,
       },
       body: JSON.stringify({
-        movieId: localStorage.getItem("movie_id"), // TODO should be in context
-        userId: 1, //TODO should be in context
+        movieId: localStorage.getItem("movie_id"),
+        userId: 1,
         comment: comment,
         rating: rating,
       }),

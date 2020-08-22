@@ -6,7 +6,7 @@ const {
   create_movie,
 } = require("../services/movies");
 
-// TODO delete movie, update movie
+// TODO Create endpoints for delete movie, update movie
 
 /* gets all movies */
 const getMovies = async (req, res) => {

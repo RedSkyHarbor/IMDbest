@@ -19,7 +19,6 @@ export const MovieDetails: React.FC = () => {
     const abortController = new AbortController();
     const signal = abortController.signal;
 
-    // TODO use-html instead of fetch
     fetch("/api/movies/" + movieId, {
       signal: signal,
       method: "GET",

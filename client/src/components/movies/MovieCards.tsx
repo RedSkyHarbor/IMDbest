@@ -16,7 +16,6 @@ export const MovieCards: React.FC = () => {
     const abortController = new AbortController();
     const signal = abortController.signal;
 
-    // TODO use-html probably unsubscribes from this automatically
     fetch("/api", {
       signal: signal,
       method: "GET",

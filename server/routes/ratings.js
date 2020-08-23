@@ -12,6 +12,6 @@ const {
 router.get("/:movieId", getRatings);
 router.get("/check/:movieId", verify, getRating);
 router.post("/", verify, postRating);
-router.put("/:movieId/:userId", verify, updateRating);
+router.put("/:movieId", verify, updateRating);
 
 module.exports = router;

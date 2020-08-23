@@ -59,11 +59,13 @@ const postRating = async (req, res) => {
 };
 
 const updateRating = async (req, res) => {
-  const { movieId, userId } = req.params;
+  const { movieId } = req.params;
+  const { userId } = req.body;
 
   const validator = new Validator(req.body, {
     comment: "required|string|minLength:3|maxLength:2055",
     rating: "required|decimal",
+    userId: "required|decimal",
   });
 
   const matched = await validator.check();

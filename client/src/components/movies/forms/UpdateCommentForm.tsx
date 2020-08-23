@@ -6,40 +6,44 @@ interface FormData {
   rating: number;
 }
 
-export const CommentForm: React.FC = () => {
+export const UpdateCommentForm: React.FC<FormData> = (props) => {
   const { register, handleSubmit, errors } = useForm<FormData>();
-  const movieId = localStorage.getItem("movie_id");
-  const authToken = localStorage.getItem("auth-token") as string;
 
-  // TODO any
+  // TODO any type
   const handleResponse = (json: any) => {
     console.log(json);
     // TODO force page refresh or re-render all components in page
   };
 
   const onSubmit = handleSubmit(({ comment, rating }) => {
-    fetch("/api/ratings", {
-      method: "POST",
+    const movieId = localStorage.getItem("movie_id");
+    const authToken = localStorage.getItem("auth-token") as string;
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+
+    fetch("/api/ratings/" + movieId, {
+      signal: signal,
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        Accpet: "application/json",
         "auth-token": authToken,
       },
       body: JSON.stringify({
-        movieId: movieId,
         comment: comment,
-        rating: +rating,
+        rating: rating,
       }),
     })
       .then((res) => res.json())
-      .then((json) => console.log(json))
+      .then((json) => handleResponse(json))
       .catch((err) => console.error(err));
   });
 
   return (
     <form onSubmit={onSubmit}>
-      <h4>Leave a review</h4>
+      <h4>Update your review</h4>
       <textarea
-        placeholder="Leave a comment"
+        defaultValue={props.comment}
         name="comment"
         ref={register({ required: true, minLength: 3, maxLength: 2055 })}
       />
@@ -54,11 +58,11 @@ export const CommentForm: React.FC = () => {
       )}
       <br />
       <input
+        defaultValue={props.rating}
         type="number"
         step=".01"
         min="0"
         max="10"
-        placeholder="Leave a rating"
         name="rating"
         ref={register({ required: true })}
       />

@@ -10,7 +10,7 @@ const {
 } = require("../controllers/ratings");
 
 router.get("/:movieId", getRatings);
-router.get("/:movieId/:userId", getRating);
+router.get("/check/:movieId", verify, getRating);
 router.post("/", verify, postRating);
 router.put("/:movieId/:userId", verify, updateRating);
 

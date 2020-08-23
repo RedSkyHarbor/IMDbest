@@ -16,7 +16,8 @@ const getRatings = async (req, res) => {
 
 /* get a rating for a particular movie from a particular user */
 const getRating = async (req, res) => {
-  const { movieId, userId } = req.params;
+  const { movieId } = req.params;
+  const { userId } = req.body;
   const rows = await get_rating(parseInt(movieId), parseInt(userId));
   res.header("content-type", "application/json");
   res.send(JSON.stringify(rows));

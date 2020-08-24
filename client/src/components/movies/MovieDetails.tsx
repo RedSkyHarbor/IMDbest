@@ -8,6 +8,8 @@ interface Movie {
   release_date: string;
   length: string;
   fcc_rating: string;
+  picture_url: string;
+  avg: number;
   summary: string;
 }
 
@@ -37,6 +39,12 @@ export const MovieDetails: React.FC = () => {
       {movie.map((movie) => (
         <div key={movie.id}>
           <h1>{movie.title}</h1>
+          <img
+            style={{ width: "300px" }}
+            src={movie.picture_url}
+            alt="movie poster"
+          />
+          <h2>{movie.avg.toString().substr(0, 4)}</h2>
           <h2>{movie.genres}</h2>
           <h2>{movie.release_date}</h2>
           <h2>{movie.length}</h2>

@@ -7,6 +7,7 @@ interface Comments {
   comment: string;
   username: string;
   rating: number;
+  created_at: string;
 }
 
 export const MovieComments: React.FC = () => {
@@ -58,6 +59,8 @@ export const MovieComments: React.FC = () => {
           <p>{comment.comment}</p>
           <p>{comment.username}</p>
           <p>{comment.rating}</p>
+          <p>{comment.created_at.substr(0, 10)}</p>
+          <hr />
         </div>
       ))}
     </section>

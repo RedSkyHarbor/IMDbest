@@ -3,7 +3,7 @@ const { pool } = require("./database-config");
 async function get_ratings(movieId) {
   try {
     const results = await pool.query(
-      "SELECT ratings.id, ratings.movieid, ratings.userid, ratings.comment, ratings.rating, users.username FROM ratings INNER JOIN users ON ratings.userid = users.id WHERE ratings.movieid=$1;",
+      "SELECT ratings.id, ratings.movieid, ratings.userid, ratings.comment, ratings.rating, ratings.created_at, users.username FROM ratings INNER JOIN users ON ratings.userid = users.id WHERE ratings.movieid=$1 ORDER BY created_at DESC;",
       [movieId]
     );
     return results.rows;

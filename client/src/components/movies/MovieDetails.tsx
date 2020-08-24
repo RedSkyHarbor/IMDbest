@@ -11,6 +11,7 @@ interface Movie {
   picture_url: string;
   avg: number;
   summary: string;
+  count: number;
 }
 
 export const MovieDetails: React.FC = () => {
@@ -44,7 +45,9 @@ export const MovieDetails: React.FC = () => {
             src={movie.picture_url}
             alt="movie poster"
           />
-          <h2>{movie.avg.toString().substr(0, 4)}</h2>
+          <h2>
+            {movie.avg.toString().substr(0, 4)} ({movie.count})
+          </h2>
           <h2>{movie.genres}</h2>
           <h2>{movie.release_date}</h2>
           <h2>{movie.length}</h2>

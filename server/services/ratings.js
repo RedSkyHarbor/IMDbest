@@ -3,7 +3,7 @@ const { pool } = require("./database-config");
 async function get_ratings(movieId) {
   try {
     const results = await pool.query(
-      "SELECT ratings.id, ratings.movieid, ratings.userid, ratings.comment, ratings.rating, ratings.created_at, users.username FROM ratings INNER JOIN users ON ratings.userid = users.id WHERE ratings.movieid=$1 ORDER BY created_at DESC;",
+      "SELECT ratings.*, users.username FROM ratings INNER JOIN users ON ratings.userid = users.id WHERE ratings.movieid=$1 ORDER BY created_at DESC;",
       [movieId]
     );
     return results.rows;
@@ -39,7 +39,7 @@ async function post_rating(movieId, userId, comment, rating) {
 async function update_rating(movieId, userId, comment, rating) {
   try {
     const results = await pool.query(
-      "UPDATE ratings SET comment=$1, rating=$2 WHERE movieId=$3 AND userId=$4 RETURNING *",
+      "UPDATE ratings SET comment=$1, rating=$2, was_updated=True WHERE movieId=$3 AND userId=$4 RETURNING *",
       [comment, rating, movieId, userId]
     );
     return results.rows;

@@ -8,6 +8,7 @@ interface Comments {
   username: string;
   rating: number;
   created_at: string;
+  was_updated: boolean;
 }
 
 export const MovieComments: React.FC = () => {
@@ -56,6 +57,11 @@ export const MovieComments: React.FC = () => {
     <section>
       {comments.map((comment) => (
         <div key={comment.id}>
+          {comment.was_updated ? (
+            <p>
+              <i>(updated)</i>
+            </p>
+          ) : null}
           <p>{comment.comment}</p>
           <p>{comment.username}</p>
           <p>{comment.rating}</p>

@@ -12,9 +12,10 @@ async function get_movies() {
 
 async function get_movie(movieId) {
   try {
-    const results = await pool.query("SELECT * FROM movies WHERE id=$1", [
-      movieId,
-    ]);
+    const results = await pool.query(
+      "SELECT movies.*, avg(rating) FROM movies INNER JOIN ratings ON movies.id = ratings.movieId WHERE movies.id=$1 GROUP BY movies.id;",
+      [movieId]
+    );
     return results.rows;
   } catch (e) {
     return [];

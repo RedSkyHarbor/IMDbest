@@ -7,6 +7,7 @@ interface Movies {
   slug: string;
   picture_url: string;
   avg: number;
+  count: number;
 }
 
 export const MovieCards: React.FC = () => {
@@ -48,7 +49,9 @@ export const MovieCards: React.FC = () => {
           >
             {movie.title}
           </Link>
-          <p>{movie.avg.toString().substr(0, 4)}</p>
+          <p>
+            {movie.avg.toString().substr(0, 4)} ({movie.count})
+          </p>
         </div>
       ))}
     </>

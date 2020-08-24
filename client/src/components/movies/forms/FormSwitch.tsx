@@ -4,6 +4,7 @@ import { CommentForm } from "./CommentForm";
 
 export const FormSwitch: React.FC = () => {
   let [isFirstComment, setIsFirstComment] = useState<boolean>(false);
+  let [isFetchFinished, setFetchFinished] = useState<boolean>(false);
   let [comment, setComment] = useState<string>("");
   let [rating, setRating] = useState<number>(-1);
 
@@ -15,6 +16,7 @@ export const FormSwitch: React.FC = () => {
       setRating(json[0].rating);
       setComment(json[0].comment);
     }
+    setFetchFinished(true);
   };
 
   useEffect(() => {
@@ -43,7 +45,7 @@ export const FormSwitch: React.FC = () => {
   }, []);
 
   // Wait for fetch to finish
-  if (comment === "" || rating === -1) {
+  if (isFetchFinished === false) {
     return <div></div>;
   }
 

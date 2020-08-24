@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
 
 interface FormData {
   comment: string;
@@ -8,11 +9,11 @@ interface FormData {
 
 export const UpdateCommentForm: React.FC<FormData> = (props) => {
   const { register, handleSubmit, errors } = useForm<FormData>();
+  let history = useHistory();
 
-  // TODO any type
+  // TODO show error, if any. need to also get status in this method
   const handleResponse = (json: any) => {
-    console.log(json);
-    // TODO force page refresh or re-render all components in page
+    history.go(0);
   };
 
   const onSubmit = handleSubmit(({ comment, rating }) => {

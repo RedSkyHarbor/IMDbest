@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
 
 interface FormData {
   comment: string;
@@ -10,11 +11,11 @@ export const CommentForm: React.FC = () => {
   const { register, handleSubmit, errors } = useForm<FormData>();
   const movieId = localStorage.getItem("movie_id");
   const authToken = localStorage.getItem("auth-token") as string;
+  let history = useHistory();
 
-  // TODO any
+  // TODO show error, if any. need to also get status in this method.
   const handleResponse = (json: any) => {
-    console.log(json);
-    // TODO force page refresh or re-render all components in page
+    history.go(0);
   };
 
   const onSubmit = handleSubmit(({ comment, rating }) => {
@@ -31,7 +32,7 @@ export const CommentForm: React.FC = () => {
       }),
     })
       .then((res) => res.json())
-      .then((json) => console.log(json))
+      .then((json) => handleResponse(json))
       .catch((err) => console.error(err));
   });
 

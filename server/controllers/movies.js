@@ -25,13 +25,13 @@ const getMovie = async (req, res) => {
 
 /* search for movies by title and order by its rating */
 const searchMovie = async (req, res) => {
-  let { orderByRating } = req.query;
+  let { order } = req.query;
   let { title } = req.params;
   if (title === undefined) {
     title = "";
   }
 
-  const rows = await search_movie(title, orderByRating);
+  const rows = await search_movie(title, order);
   res.header("content-type", "application/json");
   res.send(JSON.stringify(rows));
 };

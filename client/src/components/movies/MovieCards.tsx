@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { SearchForm } from "./forms/SearchForm";
 
 interface Movies {
   id: number;
@@ -34,8 +35,13 @@ export const MovieCards: React.FC = () => {
     localStorage.setItem("movie_id", id);
   };
 
+  const handleSubmit = (movies: Movies[]) => {
+    setMovies(movies);
+  };
+
   return (
     <>
+      <SearchForm onSearch={handleSubmit} />
       {movies.map((movie) => (
         <div key={movie.id}>
           <img

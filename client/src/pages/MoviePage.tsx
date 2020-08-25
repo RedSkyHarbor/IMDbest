@@ -1,12 +1,23 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { MovieDetails } from "../components/movies/MovieDetails";
+import { Header } from "../components/header/Header";
+import { MovieComments } from "../components/movies/MovieComments";
+import { Login } from "../components/registration/Login";
+import { FormSwitch } from "../components/movies/forms/FormSwitch";
 
 export const MoviePage: React.FC = () => {
-  let { slug } = useParams();
   return (
     <div>
-      <div>Movie page</div>
-      <div>{slug}</div>
+      <Header />
+      <MovieDetails />
+      {localStorage.getItem("auth-token") ? (
+        <FormSwitch />
+      ) : (
+        <p>
+          <Login /> to leave a comment
+        </p>
+      )}
+      <MovieComments />
     </div>
   );
 };

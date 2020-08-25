@@ -1,10 +1,17 @@
-const express = require('express');
+const express = require("express");
+const verify = require("../auth/verifyToken");
 const router = express.Router();
-const { getRatings, getRating, postRating, updateRating } = require('../controllers/ratings');
 
-router.get('/:movieId', getRatings);
-router.get('/:movieId/:userId', getRating);
-router.post('/', postRating);
-router.put('/:movieId/:userId', updateRating);
+const {
+  getRatings,
+  getRating,
+  postRating,
+  updateRating,
+} = require("../controllers/ratings");
+
+router.get("/:movieId", getRatings);
+router.get("/check/:movieId", verify, getRating);
+router.post("/", verify, postRating);
+router.put("/:movieId", verify, updateRating);
 
 module.exports = router;

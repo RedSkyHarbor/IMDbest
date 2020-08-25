@@ -1,75 +1,98 @@
-const { Validator } = require('node-input-validator');
-const { get_movies, get_movie, search_movie, create_movie } = require('../services/movies');
+const { Validator } = require("node-input-validator");
+const {
+  get_movies,
+  get_movie,
+  search_movie,
+  create_movie,
+} = require("../services/movies");
 
-// TODO delete movie, update movie
+// TODO Create endpoints for delete movie, update movie
 
 /* gets all movies */
 const getMovies = async (req, res) => {
-    const rows = await get_movies();
-    res.header('content-type', 'application/json');
-    res.send(JSON.stringify(rows));
-}
+  const rows = await get_movies();
+  res.header("content-type", "application/json");
+  res.send(JSON.stringify(rows));
+};
 
 /* gets movie with specific id */
 const getMovie = async (req, res) => {
-    const { id } = req.params;
-    const row = await get_movie(parseInt(id));
-    res.header('content-type', 'application/json');
-    res.send(JSON.stringify(row));
-}
+  const { id } = req.params;
+  const row = await get_movie(parseInt(id));
+  res.header("content-type", "application/json");
+  res.send(JSON.stringify(row));
+};
 
 /* search for movies by title and order by its rating */
 const searchMovie = async (req, res) => {
+  let { order } = req.query;
+  let { title } = req.params;
+  if (title === undefined) {
+    title = "";
+  }
 
-    let { orderByRating } = req.query
-    let { title } = req.params;
-    if (title === undefined) { title = ''; }
-
-    const rows = await search_movie(title, orderByRating);
-    res.header('content-type', 'application/json');
-    res.send(JSON.stringify(rows));
-}
+  const rows = await search_movie(title, order);
+  res.header("content-type", "application/json");
+  res.send(JSON.stringify(rows));
+};
 
 /* create a new movie */
 const postMovie = async (req, res) => {
-    // TODO should require authentication, only admins can do this
+  // TODO should require authentication, only admins can do this
 
-    const validator = new Validator(req.body, {
-        title: 'required|string|maxLength:128',
-        slug: 'required|string|maxLength:128',
-        genres: 'required|string|maxLength:64',
-        release_date: 'required|string|minLength:10|maxLength:64',
-        length: 'required|string|minLength:2|maxLength:64',
-        fcc_rating: 'required|string|maxLength:5',
-        picture_url: 'required|url|maxLength:255',
-        summary: 'required|string|maxLength:511'
-    });
+  const validator = new Validator(req.body, {
+    title: "required|string|maxLength:128",
+    slug: "required|string|maxLength:128",
+    genres: "required|string|maxLength:64",
+    release_date: "required|string|minLength:10|maxLength:64",
+    length: "required|string|minLength:2|maxLength:64",
+    fcc_rating: "required|string|maxLength:5",
+    picture_url: "required|url|maxLength:255",
+    summary: "required|string|maxLength:511",
+  });
 
-    const matched = await validator.check();
+  const matched = await validator.check();
 
-    if (!matched) {
-        res.status(422).send(validator.errors);
-        return;
-    }
+  if (!matched) {
+    res.status(422).send(validator.errors);
+    return;
+  }
 
-
-    let result = {}
-    try {
-        const { title, slug, genres, release_date, length, fcc_rating, picture_url, summary } = await req.body;
-        result.response = await create_movie(title, slug, genres, release_date, length, fcc_rating, picture_url, summary);
-        res.status(200);
-    } catch (e) {
-        res.status(400);
-        result.response = false;
-    } finally {
-        res.header('content-type', 'application/json');
-        res.send(JSON.stringify(result));
-    }
-}
+  let result = {};
+  try {
+    const {
+      title,
+      slug,
+      genres,
+      release_date,
+      length,
+      fcc_rating,
+      picture_url,
+      summary,
+    } = await req.body;
+    result.response = await create_movie(
+      title,
+      slug,
+      genres,
+      release_date,
+      length,
+      fcc_rating,
+      picture_url,
+      summary
+    );
+    res.status(200);
+  } catch (e) {
+    res.status(400);
+    result.response = false;
+  } finally {
+    res.header("content-type", "application/json");
+    res.send(JSON.stringify(result));
+  }
+};
 
 module.exports = {
-    getMovies,
-    getMovie,
-    searchMovie,
-    postMovie
+  getMovies,
+  getMovie,
+  searchMovie,
+  postMovie,
 };

@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { SearchForm } from "./forms/SearchForm";
 
-interface Movie {
+interface Movies {
   id: number;
   title: string;
   slug: string;
   picture_url: string;
   avg: number;
+  count: number;
 }
 
 export const MovieCards: React.FC = () => {
-  const [movies, setMovies] = useState<Movie[]>([]);
+  const [movies, setMovies] = useState<Movies[]>([]);
 
   useEffect(() => {
     const abortController = new AbortController();
     const signal = abortController.signal;
 
-    // TODO use-html probably unsubscribes from this automatically
     fetch("/api", {
       signal: signal,
       method: "GET",
@@ -30,8 +31,17 @@ export const MovieCards: React.FC = () => {
     };
   }, []);
 
+  const setLocalStorage = (id: string) => {
+    localStorage.setItem("movie_id", id);
+  };
+
+  const handleSubmit = (movies: Movies[]) => {
+    setMovies(movies);
+  };
+
   return (
     <>
+      <SearchForm onSearch={handleSubmit} />
       {movies.map((movie) => (
         <div key={movie.id}>
           <img
@@ -39,8 +49,15 @@ export const MovieCards: React.FC = () => {
             src={movie.picture_url}
             alt="movie poster"
           />
-          <Link to={`/movie/${movie.slug}`}>{movie.title}</Link>
-          <p>{movie.avg.toString().substr(0, 4)}</p>
+          <Link
+            onClick={() => setLocalStorage(movie.id.toString())}
+            to={`/movie/${movie.slug}`}
+          >
+            {movie.title}
+          </Link>
+          <p>
+            {movie.avg.toString().substr(0, 4)} ({movie.count})
+          </p>
         </div>
       ))}
     </>

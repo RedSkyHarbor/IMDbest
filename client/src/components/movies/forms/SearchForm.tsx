@@ -6,6 +6,8 @@ interface Movies {
   title: string;
   slug: string;
   picture_url: string;
+  length: string;
+  genres: string;
   avg: number;
   count: number;
 }

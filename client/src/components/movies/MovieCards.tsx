@@ -51,7 +51,13 @@ export const MovieCards: React.FC = () => {
   return (
     <>
       <SearchForm onSearch={handleSubmit} />
-      <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }}>
+      {/* TODO Want to reduce columns to 2 at 1152px */}
+      <SimpleGrid
+        mt="4"
+        justifyItems="center"
+        columns={{ sm: 1, md: 2, lg: 3 }}
+        spacingY="4"
+      >
         {movies.map((movie) => (
           <Box
             maxW="sm"
@@ -61,7 +67,12 @@ export const MovieCards: React.FC = () => {
             key={movie.id}
           >
             <Skeleton isLoaded={!isLoading}>
-              <Image maxW="sm" src={movie.picture_url} alt="movie poster" />
+              <Image
+                minW="sm"
+                maxW="sm"
+                src={movie.picture_url}
+                alt="movie poster"
+              />
             </Skeleton>
 
             <Box p="6">

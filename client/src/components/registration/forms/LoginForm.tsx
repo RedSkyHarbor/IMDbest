@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { FormLabel, Input, Button, Text } from "@chakra-ui/core";
 
 interface FormData {
   username: string;
@@ -66,40 +67,38 @@ export const LoginForm: React.FC = () => {
 
   return (
     <form onSubmit={onSubmit}>
-      <h1>Log in</h1>
-      {showNoLoginFound === true ? <p>Account not found</p> : null}
-      <label htmlFor="username">Username</label>
-      <input
+      <Text as="h1">Log in</Text>
+      {showNoLoginFound === true ? <Text>Account not found</Text> : null}
+      <FormLabel htmlFor="username">Username</FormLabel>
+      <Input
         name="username"
         ref={register({ required: true, minLength: 3, maxLength: 31 })}
       />
       {errors.username && errors.username.type === "required" && (
-        <p>Username is required</p>
+        <Text>Username is required</Text>
       )}
       {errors.username && errors.username.type === "minLength" && (
-        <p>Username must be at least 3 characters</p>
+        <Text>Username must be at least 3 characters</Text>
       )}
       {errors.username && errors.username.type === "maxLength" && (
-        <p>Username must be less than 31 characters</p>
+        <Text>Username must be less than 31 characters</Text>
       )}
-      <br />
-      <label htmlFor="password">Password</label>
-      <input
+      <FormLabel htmlFor="password">Password</FormLabel>
+      <Input
         name="password"
         ref={register({ required: true, minLength: 5, maxLength: 256 })}
         type="password"
       />
       {errors.password && errors.password.type === "required" && (
-        <p>Password is required</p>
+        <Text>Password is required</Text>
       )}
       {errors.password && errors.password.type === "minLength" && (
-        <p>Password must be at least 5 characters</p>
+        <Text>Password must be at least 5 characters</Text>
       )}
       {errors.password && errors.password.type === "maxLength" && (
-        <p>Password must be less than 256 characters</p>
+        <Text>Password must be less than 256 characters</Text>
       )}
-      <br />
-      <button type="submit">Log in</button>
+      <Button type="submit">Log in</Button>
     </form>
   );
 };

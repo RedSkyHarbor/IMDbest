@@ -4,6 +4,7 @@ import { Logout } from "../registration/Logout";
 import { Logo } from "./Logo";
 import { Box, Heading, Flex, Text, Button } from "@chakra-ui/core";
 
+// eslint-disable-next-line
 const MenuItems = ({ children }: any) => (
   <Text mt={{ base: 4, md: 0 }} mr={6} display="block">
     {children}

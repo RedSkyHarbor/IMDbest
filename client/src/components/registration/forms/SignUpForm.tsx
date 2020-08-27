@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { FormLabel, Input, Button, Text } from "@chakra-ui/core";
 
 interface FormData {
   username: string;
@@ -70,53 +71,50 @@ export const SignUpForm: React.FC = () => {
 
   return (
     <form onSubmit={onSubmit}>
-      <h1>Sign up</h1>
-      {showValidationErr === "" ? null : <p>{showValidationErr}</p>}
-      <label htmlFor="username">Username</label>
-      <input
+      <Text as="h1">Sign up</Text>
+      {showValidationErr === "" ? null : <Text>{showValidationErr}</Text>}
+      <FormLabel htmlFor="username">Username</FormLabel>
+      <Input
         name="username"
         ref={register({ required: true, minLength: 3, maxLength: 31 })}
       />
       {errors.username && errors.username.type === "required" && (
-        <p>Username is required</p>
+        <Text>Username is required</Text>
       )}
       {errors.username && errors.username.type === "minLength" && (
-        <p>Username must be at least 3 characters</p>
+        <Text>Username must be at least 3 characters</Text>
       )}
       {errors.username && errors.username.type === "maxLength" && (
-        <p>Username must be less than 31 characters</p>
+        <Text>Username must be less than 31 characters</Text>
       )}
-      <br />
-      <label htmlFor="email">Email</label>
-      <input
+      <FormLabel htmlFor="email">Email</FormLabel>
+      <Input
         name="email"
         ref={register({ required: true, maxLength: 64 })}
         type="email"
       />
       {errors.email && errors.email.type === "required" && (
-        <p>Email is required</p>
+        <Text>Email is required</Text>
       )}
       {errors.email && errors.email.type === "maxLength" && (
-        <p>Email must be less than 64 characters</p>
+        <Text>Email must be less than 64 characters</Text>
       )}
-      <br />
-      <label htmlFor="password">Password</label>
-      <input
+      <FormLabel htmlFor="password">Password</FormLabel>
+      <Input
         name="password"
         ref={register({ required: true, minLength: 5, maxLength: 256 })}
         type="password"
       />
       {errors.password && errors.password.type === "required" && (
-        <p>Password is required</p>
+        <Text>Password is required</Text>
       )}
       {errors.password && errors.password.type === "minLength" && (
-        <p>Password must be at least 5 characters</p>
+        <Text>Password must be at least 5 characters</Text>
       )}
       {errors.password && errors.password.type === "maxLength" && (
-        <p>Password must be less than 256 characters</p>
+        <Text>Password must be less than 256 characters</Text>
       )}
-      <br />
-      <button type="submit">Sign Up</button>
+      <Button type="submit">Sign Up</Button>
     </form>
   );
 };

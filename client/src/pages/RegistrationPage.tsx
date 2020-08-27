@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { LoginForm } from "../components/registration/forms/LoginForm";
 import { SignUpForm } from "../components/registration/forms/SignUpForm";
 import { Header } from "../components/header/Header";
+import { Button } from "@chakra-ui/core";
 
 export const RegistrationPage: React.FC = () => {
   const [currentView, setView] = useState<string>("SIGN_UP");
@@ -12,12 +13,12 @@ export const RegistrationPage: React.FC = () => {
   return (
     <div>
       <Header />
-      <button title="LOG_IN" onClick={handleClick}>
+      <Button title="LOG_IN" onClick={handleClick}>
         Log in
-      </button>
-      <button title="SIGN_UP" onClick={handleClick}>
+      </Button>
+      <Button title="SIGN_UP" onClick={handleClick}>
         Sign Up
-      </button>
+      </Button>
       {currentView === "LOG_IN" ? <LoginForm /> : <SignUpForm />}
     </div>
   );

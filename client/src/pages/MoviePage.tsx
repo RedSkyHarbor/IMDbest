@@ -4,6 +4,7 @@ import { Header } from "../components/header/Header";
 import { MovieComments } from "../components/movies/MovieComments";
 import { Login } from "../components/registration/Login";
 import { FormSwitch } from "../components/movies/forms/FormSwitch";
+import { Box } from "@chakra-ui/core";
 
 export const MoviePage: React.FC = () => {
   return (
@@ -13,10 +14,11 @@ export const MoviePage: React.FC = () => {
       {localStorage.getItem("auth-token") ? (
         <FormSwitch />
       ) : (
-        <p>
+        <Box>
           <Login /> to leave a comment
-        </p>
+        </Box>
       )}
+
       <MovieComments />
     </div>
   );

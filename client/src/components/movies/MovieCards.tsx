@@ -68,8 +68,8 @@ export const MovieCards: React.FC = () => {
           >
             <Skeleton isLoaded={!isLoading}>
               <Image
-                minW="sm"
-                maxW="sm"
+                minW="xs"
+                maxW="xs"
                 src={movie.picture_url}
                 alt="movie poster"
               />

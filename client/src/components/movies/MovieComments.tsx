@@ -55,9 +55,10 @@ export const MovieComments: React.FC = () => {
   }, []);
 
   return (
-    <section>
+    <Box mt="4">
+      <Text fontSize="xl">User Reviews</Text>
       {comments.map((comment) => (
-        <Box key={comment.id}>
+        <Box mt="2" key={comment.id}>
           <Box d="flex" mt="1" alignItems="center">
             {Array(10)
               .fill("")
@@ -82,6 +83,6 @@ export const MovieComments: React.FC = () => {
           <Divider orientation="horizontal" />
         </Box>
       ))}
-    </section>
+    </Box>
   );
 };

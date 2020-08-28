@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Box, Text, Divider, Icon } from "@chakra-ui/core";
 
 interface Comments {
   id: number;
@@ -56,18 +57,30 @@ export const MovieComments: React.FC = () => {
   return (
     <section>
       {comments.map((comment) => (
-        <div key={comment.id}>
-          {comment.was_updated ? (
-            <p>
-              <i>(updated)</i>
-            </p>
-          ) : null}
-          <p>{comment.comment}</p>
-          <p>{comment.username}</p>
-          <p>{comment.rating}</p>
-          <p>{comment.created_at.substr(0, 10)}</p>
-          <hr />
-        </div>
+        <Box key={comment.id}>
+          <Box d="flex" mt="1" alignItems="center">
+            {Array(10)
+              .fill("")
+              .map((_, i) => (
+                <Icon
+                  name="star"
+                  key={i}
+                  color={i < comment.rating ? "teal.500" : "gray:300"}
+                />
+              ))}
+            <Box ml="1" fontWeight="semibold">
+              Headline
+            </Box>
+          </Box>
+          <Box d="flex" fontSize="xs">
+            <Text>{comment.created_at.substr(0, 10)}</Text>
+            <Divider orientation="vertical" />
+            <Text>by {comment.username}</Text>
+          </Box>
+          {comment.was_updated ? <Text as="i">(updated)</Text> : null}
+          <Text>{comment.comment}</Text>
+          <Divider orientation="horizontal" />
+        </Box>
       ))}
     </section>
   );

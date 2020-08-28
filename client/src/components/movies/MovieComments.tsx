@@ -10,6 +10,7 @@ interface Comments {
   rating: number;
   created_at: string;
   was_updated: boolean;
+  headline: string;
 }
 
 export const MovieComments: React.FC = () => {
@@ -70,7 +71,7 @@ export const MovieComments: React.FC = () => {
                 />
               ))}
             <Box ml="1" fontWeight="semibold">
-              Headline
+              {comment.headline}
             </Box>
           </Box>
           <Box d="flex" fontSize="xs">

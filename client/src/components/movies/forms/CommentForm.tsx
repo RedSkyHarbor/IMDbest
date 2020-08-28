@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
+import { Text, Input, Button, Textarea } from "@chakra-ui/core";
 
 interface FormData {
   comment: string;
@@ -38,23 +39,25 @@ export const CommentForm: React.FC = () => {
 
   return (
     <form onSubmit={onSubmit}>
-      <h4>Leave a review</h4>
-      <textarea
+      <Text mt="4" fontSize="xl">
+        Leave a review
+      </Text>
+      <Textarea
         placeholder="Leave a comment"
         name="comment"
+        resize="vertical"
         ref={register({ required: true, minLength: 3, maxLength: 2055 })}
       />
       {errors.comment && errors.comment.type === "required" && (
-        <span>Leaving a comment is required</span>
+        <Text>Leaving a comment is required</Text>
       )}
       {errors.comment && errors.comment.type === "minLength" && (
-        <span>Comment must be at least 3 characters long</span>
+        <Text>Comment must be at least 3 characters long</Text>
       )}
       {errors.comment && errors.comment.type === "maxLength" && (
-        <span>Comment must be less than 2055 characters long</span>
+        <Text>Comment must be less than 2055 characters long</Text>
       )}
-      <br />
-      <input
+      <Input
         type="number"
         step=".01"
         min="0"
@@ -64,10 +67,9 @@ export const CommentForm: React.FC = () => {
         ref={register({ required: true })}
       />
       {errors.rating && errors.rating.type === "required" && (
-        <span>Leaving a rating is required</span>
+        <Text>Leaving a rating is required</Text>
       )}
-      <br />
-      <input type="submit" />
+      <Button type="submit">Submit</Button>
     </form>
   );
 };

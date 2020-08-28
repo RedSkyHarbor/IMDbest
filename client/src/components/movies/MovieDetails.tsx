@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Box, Flex, Image, Icon, Divider } from "@chakra-ui/core";
 
 interface Movie {
   id: number;
@@ -17,6 +18,10 @@ interface Movie {
 export const MovieDetails: React.FC = () => {
   let [movie, setMovie] = useState<Movie[]>([]);
 
+  const handleResponse = (json: Movie[]) => {
+    setMovie(json);
+  };
+
   useEffect(() => {
     const movieId = localStorage.getItem("movie_id");
     const abortController = new AbortController();
@@ -27,7 +32,7 @@ export const MovieDetails: React.FC = () => {
       method: "GET",
     })
       .then((res) => res.json())
-      .then((json) => setMovie(json))
+      .then((json) => handleResponse(json))
       .catch((err) => console.log(err));
 
     return () => {
@@ -38,22 +43,57 @@ export const MovieDetails: React.FC = () => {
   return (
     <section>
       {movie.map((movie) => (
-        <div key={movie.id}>
-          <h1>{movie.title}</h1>
-          <img
+        <Box key={movie.id}>
+          <Box
+            fontSize="32px"
+            color="gray:400"
+            mt="1"
+            fontWeight="semibold"
+            lineHeight="tight"
+          >
+            {movie.title}
+          </Box>
+
+          <Flex
+            color="gray.500"
+            fontWeight="semibold"
+            letterSpacing="wide"
+            fontSize="xs"
+          >
+            <Box>{movie.release_date}</Box>
+            <Divider orientation="vertical" />
+            <Box>{movie.length}</Box>
+            <Divider orientation="vertical" />
+            <Box>{movie.fcc_rating}</Box>
+            <Divider orientation="vertical" />
+            <Box>{movie.genres}</Box>
+          </Flex>
+
+          <Image
             style={{ width: "300px" }}
             src={movie.picture_url}
+            minW="sm"
+            maxW="sm"
             alt="movie poster"
           />
-          <h2>
-            {movie.avg.toString().substr(0, 4)} ({movie.count})
-          </h2>
-          <h2>{movie.genres}</h2>
-          <h2>{movie.release_date}</h2>
-          <h2>{movie.length}</h2>
-          <h2>{movie.fcc_rating}</h2>
-          <h2>{movie.summary}</h2>
-        </div>
+
+          <Box d="flex" mt="1" alignItems="center">
+            {Array(10)
+              .fill("")
+              .map((_, i) => (
+                <Icon
+                  name="star"
+                  key={i}
+                  color={i < movie.avg ? "teal.500" : "gray:300"}
+                />
+              ))}
+            <Box as="span" ml="2" color="gray.600" fontSize="sm">
+              {movie.count} reviews
+            </Box>
+          </Box>
+
+          <Box>{movie.summary}</Box>
+        </Box>
       ))}
     </section>
   );

@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { UpdateCommentForm } from "./UpdateCommentForm";
 import { CommentForm } from "./CommentForm";
+import { Box } from "@chakra-ui/core";
 
 export const FormSwitch: React.FC = () => {
   let [isFirstComment, setIsFirstComment] = useState<boolean>(false);
   let [isFetchFinished, setFetchFinished] = useState<boolean>(false);
   let [comment, setComment] = useState<string>("");
   let [rating, setRating] = useState<number>(-1);
+  let [headline, setHeadline] = useState<string>("");
 
   const handleResponse = (json: any) => {
     if (json.length === 0) {
@@ -15,6 +17,7 @@ export const FormSwitch: React.FC = () => {
       setIsFirstComment(false);
       setRating(json[0].rating);
       setComment(json[0].comment);
+      setHeadline(json[0].headline);
     }
     setFetchFinished(true);
   };
@@ -50,12 +53,16 @@ export const FormSwitch: React.FC = () => {
   }
 
   return (
-    <>
+    <Box mr="1.5rem" ml="1.5rem">
       {isFirstComment ? (
         <CommentForm />
       ) : (
-        <UpdateCommentForm comment={comment} rating={rating} />
+        <UpdateCommentForm
+          headline={headline}
+          comment={comment}
+          rating={rating}
+        />
       )}
-    </>
+    </Box>
   );
 };

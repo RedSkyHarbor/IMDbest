@@ -4,21 +4,22 @@ import { Header } from "../components/header/Header";
 import { MovieComments } from "../components/movies/MovieComments";
 import { Login } from "../components/registration/Login";
 import { FormSwitch } from "../components/movies/forms/FormSwitch";
-import { Box, Link as ChakraLink } from "@chakra-ui/core";
+import { Box } from "@chakra-ui/core";
 
 export const MoviePage: React.FC = () => {
   return (
     <div>
       <Header />
       <MovieDetails />
+
       {localStorage.getItem("auth-token") ? (
         <FormSwitch />
       ) : (
-        <Box mt="4">
+        <Box ml="1.5rem" mt="4">
           Want to leave a review?&nbsp;
-          <ChakraLink color="teal.500">
+          <Box as="span" color="teal.500">
             <Login />.
-          </ChakraLink>
+          </Box>
         </Box>
       )}
 

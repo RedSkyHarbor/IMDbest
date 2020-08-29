@@ -56,10 +56,19 @@ export const MovieComments: React.FC = () => {
   }, []);
 
   return (
-    <Box mt="4">
+    <Box ml="1.5rem" mt="4">
       <Text fontSize="xl">User Reviews</Text>
+
       {comments.map((comment) => (
         <Box mt="2" key={comment.id}>
+          <Box fontWeight="semibold">{comment.headline}</Box>
+
+          <Box d="flex" fontSize="xs">
+            <Text>{comment.created_at.substr(0, 10)}</Text>
+            <Divider orientation="vertical" />
+            <Text>by {comment.username}</Text>
+          </Box>
+
           <Box d="flex" mt="1" alignItems="center">
             {Array(10)
               .fill("")
@@ -70,15 +79,8 @@ export const MovieComments: React.FC = () => {
                   color={i < comment.rating ? "teal.500" : "gray:300"}
                 />
               ))}
-            <Box ml="1" fontWeight="semibold">
-              {comment.headline}
-            </Box>
           </Box>
-          <Box d="flex" fontSize="xs">
-            <Text>{comment.created_at.substr(0, 10)}</Text>
-            <Divider orientation="vertical" />
-            <Text>by {comment.username}</Text>
-          </Box>
+
           {comment.was_updated ? <Text as="i">(updated)</Text> : null}
           <Text>{comment.comment}</Text>
           <Divider orientation="horizontal" />

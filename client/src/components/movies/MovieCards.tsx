@@ -58,7 +58,6 @@ export const MovieCards: React.FC = () => {
   return (
     <>
       <SearchForm onSearch={handleSubmit} />
-      {/* TODO Want to reduce columns to 2 at 1152px */}
       <SimpleGrid
         mt="4"
         justifyItems="center"
@@ -97,6 +96,7 @@ export const MovieCards: React.FC = () => {
                   {movie.genres}
                 </Box>
               </Skeleton>
+
               <Skeleton isLoaded={!isLoading}>
                 <ChakraLink
                   onClick={() => setLocalStorage(movie.id.toString())}
@@ -107,22 +107,17 @@ export const MovieCards: React.FC = () => {
                   <Link to={`/movie/${movie.slug}`}> {movie.title}</Link>
                 </ChakraLink>
               </Skeleton>
+
               <Skeleton isLoaded={!isLoading}>
                 <Box mt="1">{movie.length}</Box>
               </Skeleton>
+
               <Skeleton isLoaded={!isLoading}>
                 <Box d="flex" mt="1" alignItems="center">
-                  {Array(10)
-                    .fill("")
-                    .map((_, i) => (
-                      <Icon
-                        name="star"
-                        key={i}
-                        color={i < movie.avg ? "teal.500" : "gray:300"}
-                      />
-                    ))}
-                  <Box as="span" ml="2" color="gray.600" fontSize="sm">
-                    {movie.count} reviews
+                  <Icon name="star" color="yellow.500" />
+                  <Box ml="2">{movie.avg}</Box>
+                  <Box as="span" ml="1" color="gray.600" fontSize="sm">
+                    ({movie.count} reviews)
                   </Box>
                 </Box>
               </Skeleton>

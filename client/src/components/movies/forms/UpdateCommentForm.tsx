@@ -48,7 +48,7 @@ export const UpdateCommentForm: React.FC<FormData> = (props) => {
         Update your review
       </Text>
       <Input
-        placeholder="Leave a headline"
+        defaultValue={props.headline}
         name="headline"
         type="text"
         ref={register({ required: true, minLength: 3, maxLength: 64 })}
@@ -72,6 +72,7 @@ export const UpdateCommentForm: React.FC<FormData> = (props) => {
         </Text>
       )}
       <Textarea
+        mt="4"
         defaultValue={props.comment}
         name="comment"
         ref={register({ required: true, minLength: 3, maxLength: 2055 })}

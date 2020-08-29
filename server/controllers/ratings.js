@@ -30,6 +30,7 @@ const postRating = async (req, res) => {
     userId: "required|integer",
     comment: "required|string|minLength:3|maxLength:2055",
     rating: "required|decimal",
+    headline: "required|string|minLength:3|maxLength:64",
   });
 
   const matched = await validator.check();
@@ -46,8 +47,14 @@ const postRating = async (req, res) => {
 
   let result = {};
   try {
-    const { movieId, userId, comment, rating } = req.body;
-    result.response = await post_rating(movieId, userId, comment, rating);
+    const { movieId, userId, headline, comment, rating } = req.body;
+    result.response = await post_rating(
+      movieId,
+      userId,
+      headline,
+      comment,
+      rating
+    );
     res.status(200);
   } catch (e) {
     res.status(400);

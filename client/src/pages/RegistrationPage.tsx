@@ -3,7 +3,7 @@ import { LoginForm } from "../components/registration/forms/LoginForm";
 import { SignUpForm } from "../components/registration/forms/SignUpForm";
 import { CustomRadio } from "../components/registration/CustomRadio";
 import { Header } from "../components/header/Header";
-import { RadioButtonGroup } from "@chakra-ui/core";
+import { Flex, Box, RadioButtonGroup } from "@chakra-ui/core";
 
 export const RegistrationPage: React.FC = () => {
   const [currentView, setView] = useState<string | number | undefined>(
@@ -15,20 +15,24 @@ export const RegistrationPage: React.FC = () => {
   };
 
   return (
-    <div>
+    <>
       <Header />
 
-      <RadioButtonGroup
-        mt="4"
-        defaultValue="LOG_IN"
-        onChange={(val) => handleChange(val)}
-        isInline
-      >
-        <CustomRadio value="LOG_IN">Log In</CustomRadio>
-        <CustomRadio value="SIGN_UP">Sign Up</CustomRadio>
-      </RadioButtonGroup>
+      <Flex justifyContent="center" alignItems="center">
+        <RadioButtonGroup
+          mt="4"
+          defaultValue="LOG_IN"
+          onChange={(val) => handleChange(val)}
+          isInline
+        >
+          <CustomRadio value="LOG_IN">Log In</CustomRadio>
+          <CustomRadio value="SIGN_UP">Sign Up</CustomRadio>
+        </RadioButtonGroup>
+      </Flex>
 
-      {currentView === "LOG_IN" ? <LoginForm /> : <SignUpForm />}
-    </div>
+      <Box mt="2" ml="1.5rem" mr="1.5rem">
+        {currentView === "LOG_IN" ? <LoginForm /> : <SignUpForm />}
+      </Box>
+    </>
   );
 };

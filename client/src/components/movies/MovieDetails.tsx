@@ -41,7 +41,14 @@ export const MovieDetails: React.FC = () => {
   }, []);
 
   return (
-    <SimpleGrid justifyItems="center" mt="4" columns={{ sm: 1, md: 2 }}>
+    <SimpleGrid
+      columns={{ sm: 1, md: 2 }}
+      //gridTemplateColumns=" repeat(auto-fit, minmax(480px, 1fr));"
+      //gridTemplateColumns="min-content auto"
+      gridColumnGap="1px"
+      justifyItems="center"
+      mt="4"
+    >
       {movie.map((movie) => (
         <React.Fragment key={movie.id}>
           <Box>
@@ -58,7 +65,6 @@ export const MovieDetails: React.FC = () => {
             <Box
               fontSize="32px"
               color="gray:400"
-              mt="1"
               fontWeight="semibold"
               lineHeight="tight"
             >

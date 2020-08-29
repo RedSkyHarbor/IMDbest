@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { SearchForm } from "./forms/SearchForm";
-import { Box, Image, Icon, SimpleGrid, Skeleton } from "@chakra-ui/core/dist";
-import { LinkButton } from "../reusable/LinkButton";
+import { Link } from "react-router-dom";
+import {
+  Box,
+  Image,
+  Icon,
+  SimpleGrid,
+  Skeleton,
+  Link as ChakraLink,
+} from "@chakra-ui/core/dist";
 
 interface Movies {
   id: number;
@@ -91,17 +98,14 @@ export const MovieCards: React.FC = () => {
                 </Box>
               </Skeleton>
               <Skeleton isLoaded={!isLoading}>
-                <LinkButton
+                <ChakraLink
                   onClick={() => setLocalStorage(movie.id.toString())}
-                  to={`/movie/${movie.slug}`}
-                  variant="link"
-                  variantColor="gray:400"
                   mt="1"
                   fontWeight="semibold"
                   lineHeight="tight"
                 >
-                  {movie.title}
-                </LinkButton>
+                  <Link to={`/movie/${movie.slug}`}> {movie.title}</Link>
+                </ChakraLink>
               </Skeleton>
               <Skeleton isLoaded={!isLoading}>
                 <Box mt="1">{movie.length}</Box>

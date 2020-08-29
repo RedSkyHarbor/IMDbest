@@ -71,7 +71,6 @@ export const SignUpForm: React.FC = () => {
 
   return (
     <form onSubmit={onSubmit}>
-      <Text as="h1">Sign up</Text>
       {showValidationErr === "" ? null : <Text>{showValidationErr}</Text>}
       <FormLabel htmlFor="username">Username</FormLabel>
       <Input

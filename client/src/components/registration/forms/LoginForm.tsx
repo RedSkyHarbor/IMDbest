@@ -67,7 +67,6 @@ export const LoginForm: React.FC = () => {
 
   return (
     <form onSubmit={onSubmit}>
-      <Text as="h1">Log in</Text>
       {showNoLoginFound === true ? <Text>Account not found</Text> : null}
       <FormLabel htmlFor="username">Username</FormLabel>
       <Input

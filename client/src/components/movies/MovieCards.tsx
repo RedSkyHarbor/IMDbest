@@ -60,7 +60,8 @@ export const MovieCards: React.FC = () => {
       >
         {movies.map((movie) => (
           <Box
-            maxW="sm"
+            minW="xs"
+            maxW="xs"
             borderWidth="1px"
             rounded="lg"
             overflow="hidden"
@@ -70,6 +71,7 @@ export const MovieCards: React.FC = () => {
               <Image
                 minW="xs"
                 maxW="xs"
+                maxH="480px"
                 src={movie.picture_url}
                 alt="movie poster"
               />

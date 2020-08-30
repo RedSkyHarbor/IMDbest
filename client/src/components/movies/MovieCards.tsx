@@ -67,13 +67,18 @@ export const MovieCards: React.FC = () => {
             key={movie.id}
           >
             <Skeleton isLoaded={!isLoading}>
-              <Image
-                minW="xs"
-                maxW="xs"
-                maxH="480px"
-                src={movie.picture_url}
-                alt="movie poster"
-              />
+              <Link
+                to={`/movie/${movie.slug}`}
+                onClick={() => setLocalStorage(movie.id.toString())}
+              >
+                <Image
+                  minW="xs"
+                  maxW="xs"
+                  maxH="480px"
+                  src={movie.picture_url}
+                  alt="movie poster"
+                />
+              </Link>
             </Skeleton>
 
             <Box p="6">
@@ -96,7 +101,6 @@ export const MovieCards: React.FC = () => {
                     to={`/movie/${movie.slug}`}
                     onClick={() => setLocalStorage(movie.id.toString())}
                   >
-                    {" "}
                     {movie.title}
                   </Link>
                 </Box>

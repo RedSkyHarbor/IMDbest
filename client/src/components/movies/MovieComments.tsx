@@ -23,7 +23,7 @@ export const MovieComments: React.FC = () => {
     json: Comments[]
   ) => {
     if (status === 200) {
-      setTimeout(() => setLoading(false), 1000);
+      setLoading(false);
       setComments(json);
     }
   };
@@ -64,8 +64,8 @@ export const MovieComments: React.FC = () => {
       </Skeleton>
 
       {comments.map((comment) => (
-        <Skeleton isLoaded={!isLoading}>
-          <Box mt="2" key={comment.id}>
+        <Box mt="2" key={comment.id}>
+          <Skeleton isLoaded={!isLoading}>
             <Box fontWeight="semibold">{comment.headline}</Box>
 
             <Box d="flex" fontSize="xs">
@@ -86,11 +86,15 @@ export const MovieComments: React.FC = () => {
                 ))}
             </Box>
 
-            {comment.was_updated ? <Text as="i">(updated)</Text> : null}
+            {comment.was_updated ? (
+              <Text fontSize="xs" as="i">
+                (updated)
+              </Text>
+            ) : null}
             <Text>{comment.comment}</Text>
             <Divider orientation="horizontal" />
-          </Box>
-        </Skeleton>
+          </Skeleton>
+        </Box>
       ))}
     </Box>
   );

@@ -31,7 +31,7 @@ export const MovieDetails: React.FC = () => {
   let [isLoading, setLoading] = useState<boolean>(true);
 
   const handleResponse = (json: Movie[]) => {
-    setTimeout(() => setLoading(false), 1000);
+    setLoading(false);
     setMovie(json);
   };
 

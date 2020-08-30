@@ -19,7 +19,7 @@ export const MovieCards: React.FC = () => {
   const [isLoading, setLoading] = useState<boolean>(true);
 
   const handleResponse = (json: Movies[]) => {
-    setTimeout(() => setLoading(false), 2000);
+    setLoading(false);
     setMovies(json);
   };
 

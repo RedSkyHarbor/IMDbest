@@ -111,7 +111,9 @@ export const UpdateCommentForm: React.FC<FormData> = (props) => {
           Leaving a rating is required
         </Text>
       )}
-      <Button type="submit">Submit</Button>
+      <Button mt="4" type="submit">
+        Submit
+      </Button>
     </form>
   );
 };

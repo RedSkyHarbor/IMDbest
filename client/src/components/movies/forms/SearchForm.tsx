@@ -48,7 +48,7 @@ export const SearchForm: React.FC<SearchProps> = (props) => {
   });
 
   return (
-    <Box pt="4" margin="auto" width="50%">
+    <Box pt="4" margin="auto" ml="5rem" mr="5.5rem">
       <form onSubmit={onSubmit}>
         <FormControl>
           <InputGroup size="md">

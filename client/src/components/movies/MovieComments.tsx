@@ -81,7 +81,7 @@ export const MovieComments: React.FC = () => {
                   <Icon
                     name="star"
                     key={i}
-                    color={i < comment.rating ? "teal.500" : "gray:300"}
+                    color={i < comment.rating ? "yellow.500" : "gray:300"}
                   />
                 ))}
             </Box>

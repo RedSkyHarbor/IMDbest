@@ -109,7 +109,7 @@ export const MovieCards: React.FC = () => {
               <Skeleton isLoaded={!isLoading}>
                 <Box d="flex" mt="1" alignItems="center">
                   <Icon name="star" color="yellow.500" />
-                  <Box ml="2">{movie.avg}</Box>
+                  <Box ml="2">{movie.avg.toString().substr(0, 4)}</Box>
                   <Box as="span" ml="1" color="gray.600" fontSize="sm">
                     ({movie.count} reviews)
                   </Box>

@@ -116,7 +116,7 @@ export const MovieDetails: React.FC = () => {
                       />
                     ))}
                   <Box as="span" ml="2">
-                    ({movie.avg})
+                    ({movie.avg.toString().substr(0, 4)})
                   </Box>
                   <Box as="span" ml="2" color="gray.600" fontSize="sm">
                     {movie.count} reviews

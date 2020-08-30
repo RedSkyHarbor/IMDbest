@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Box, Flex, Image, Icon, Divider, SimpleGrid } from "@chakra-ui/core";
+import {
+  Box,
+  Flex,
+  Image,
+  Icon,
+  Divider,
+  SimpleGrid,
+  Skeleton,
+} from "@chakra-ui/core";
 
 interface Movie {
   id: number;
@@ -17,8 +25,10 @@ interface Movie {
 
 export const MovieDetails: React.FC = () => {
   let [movie, setMovie] = useState<Movie[]>([]);
+  let [isLoading, setLoading] = useState<boolean>(true);
 
   const handleResponse = (json: Movie[]) => {
+    setTimeout(() => setLoading(false), 1000);
     setMovie(json);
   };
 
@@ -41,73 +51,82 @@ export const MovieDetails: React.FC = () => {
   }, []);
 
   return (
-    <SimpleGrid
-      columns={{ sm: 1, md: 2 }}
-      //gridTemplateColumns=" repeat(auto-fit, minmax(480px, 1fr));"
-      //gridTemplateColumns="min-content auto"
-      gridColumnGap="1px"
-      justifyItems="center"
-      mt="4"
-    >
-      {movie.map((movie) => (
-        <React.Fragment key={movie.id}>
-          <Box>
-            <Image
-              style={{ width: "300px" }}
-              src={movie.picture_url}
-              minW="xs"
-              maxW="xs"
-              maxH="480px"
-              alt="movie poster"
-            />
-          </Box>
-          <Box ml="1.5rem">
-            <Box
-              fontSize="32px"
-              color="gray:400"
-              fontWeight="semibold"
-              lineHeight="tight"
-            >
-              {movie.title}
-            </Box>
-
-            <Flex
-              color="gray.500"
-              fontWeight="semibold"
-              letterSpacing="wide"
-              fontSize="xs"
-            >
-              <Box>{movie.release_date}</Box>
-              <Divider orientation="vertical" />
-              <Box>{movie.length}</Box>
-              <Divider orientation="vertical" />
-              <Box>{movie.fcc_rating}</Box>
-              <Divider orientation="vertical" />
-              <Box>{movie.genres}</Box>
-            </Flex>
-
-            <Box d="flex" mt="1" alignItems="center">
-              {Array(10)
-                .fill("")
-                .map((_, i) => (
-                  <Icon
-                    name="star"
-                    key={i}
-                    color={i < movie.avg ? "yellow.500" : "gray:300"}
-                  />
-                ))}
-              <Box as="span" ml="2">
-                ({movie.avg})
+    <>
+      <SimpleGrid
+        gridTemplateColumns="repeat(auto-fit, minmax(320px, 1fr), auto);"
+        gridColumnGap="1px"
+        justifyItems="center"
+        mt="4"
+      >
+        {movie.map((movie) => (
+          <React.Fragment key={movie.id}>
+            <Skeleton isLoaded={!isLoading}>
+              <Box>
+                <Image
+                  style={{ width: "300px" }}
+                  src={movie.picture_url}
+                  minW="xs"
+                  maxW="xs"
+                  maxH="480px"
+                  alt="movie poster"
+                />
               </Box>
-              <Box as="span" ml="2" color="gray.600" fontSize="sm">
-                {movie.count} reviews
-              </Box>
-            </Box>
+            </Skeleton>
+            <Box mt="1rem" ml="1.5rem">
+              <Skeleton isLoaded={!isLoading}>
+                <Box
+                  fontSize="32px"
+                  color="gray:400"
+                  fontWeight="semibold"
+                  lineHeight="tight"
+                >
+                  {movie.title}
+                </Box>
+              </Skeleton>
 
-            <Box>{movie.summary}</Box>
-          </Box>
-        </React.Fragment>
-      ))}
-    </SimpleGrid>
+              <Skeleton isLoaded={!isLoading}>
+                <Flex
+                  color="gray.500"
+                  fontWeight="semibold"
+                  letterSpacing="wide"
+                  fontSize="xs"
+                >
+                  <Box>{movie.release_date}</Box>
+                  <Divider orientation="vertical" />
+                  <Box>{movie.length}</Box>
+                  <Divider orientation="vertical" />
+                  <Box>{movie.fcc_rating}</Box>
+                  <Divider orientation="vertical" />
+                  <Box>{movie.genres}</Box>
+                </Flex>
+              </Skeleton>
+
+              <Skeleton isLoaded={!isLoading}>
+                <Box d="flex" mt="1" alignItems="center">
+                  {Array(10)
+                    .fill("")
+                    .map((_, i) => (
+                      <Icon
+                        name="star"
+                        key={i}
+                        color={i < movie.avg ? "yellow.500" : "gray:300"}
+                      />
+                    ))}
+                  <Box as="span" ml="2">
+                    ({movie.avg})
+                  </Box>
+                  <Box as="span" ml="2" color="gray.600" fontSize="sm">
+                    {movie.count} reviews
+                  </Box>
+                </Box>
+              </Skeleton>
+              <Skeleton isLoaded={!isLoading}>
+                <Box>{movie.summary}</Box>
+              </Skeleton>
+            </Box>
+          </React.Fragment>
+        ))}
+      </SimpleGrid>
+    </>
   );
 };

@@ -1,4 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { Login } from "../registration/Login";
+import { FormSwitch } from "../movies/forms/FormSwitch";
+
+import {
+  Box,
+  Flex,
+  Image,
+  Icon,
+  Divider,
+  SimpleGrid,
+  Skeleton,
+} from "@chakra-ui/core";
 
 interface Movie {
   id: number;
@@ -16,6 +28,12 @@ interface Movie {
 
 export const MovieDetails: React.FC = () => {
   let [movie, setMovie] = useState<Movie[]>([]);
+  let [isLoading, setLoading] = useState<boolean>(true);
+
+  const handleResponse = (json: Movie[]) => {
+    setLoading(false);
+    setMovie(json);
+  };
 
   useEffect(() => {
     const movieId = localStorage.getItem("movie_id");
@@ -27,7 +45,7 @@ export const MovieDetails: React.FC = () => {
       method: "GET",
     })
       .then((res) => res.json())
-      .then((json) => setMovie(json))
+      .then((json) => handleResponse(json))
       .catch((err) => console.log(err));
 
     return () => {
@@ -36,25 +54,94 @@ export const MovieDetails: React.FC = () => {
   }, []);
 
   return (
-    <section>
-      {movie.map((movie) => (
-        <div key={movie.id}>
-          <h1>{movie.title}</h1>
-          <img
-            style={{ width: "300px" }}
-            src={movie.picture_url}
-            alt="movie poster"
-          />
-          <h2>
-            {movie.avg.toString().substr(0, 4)} ({movie.count})
-          </h2>
-          <h2>{movie.genres}</h2>
-          <h2>{movie.release_date}</h2>
-          <h2>{movie.length}</h2>
-          <h2>{movie.fcc_rating}</h2>
-          <h2>{movie.summary}</h2>
-        </div>
-      ))}
-    </section>
+    <>
+      <SimpleGrid
+        gridTemplateColumns="repeat(auto-fit, minmax(320px, 1fr), auto);"
+        gridColumnGap="1px"
+        justifyItems="center"
+        mt="4"
+      >
+        {movie.map((movie) => (
+          <React.Fragment key={movie.id}>
+            <Skeleton isLoaded={!isLoading}>
+              <Box>
+                <Image
+                  style={{ width: "300px" }}
+                  src={movie.picture_url}
+                  minW="xs"
+                  maxW="xs"
+                  maxH="480px"
+                  alt="movie poster"
+                />
+              </Box>
+            </Skeleton>
+            <Box mt="1rem" ml="1.5rem">
+              <Skeleton isLoaded={!isLoading}>
+                <Box
+                  fontSize="32px"
+                  color="gray:400"
+                  fontWeight="semibold"
+                  lineHeight="tight"
+                >
+                  {movie.title}
+                </Box>
+              </Skeleton>
+
+              <Skeleton isLoaded={!isLoading}>
+                <Flex
+                  color="gray.500"
+                  fontWeight="semibold"
+                  letterSpacing="wide"
+                  fontSize="xs"
+                >
+                  <Box>{movie.release_date}</Box>
+                  <Divider orientation="vertical" />
+                  <Box>{movie.length}</Box>
+                  <Divider orientation="vertical" />
+                  <Box>{movie.fcc_rating}</Box>
+                  <Divider orientation="vertical" />
+                  <Box>{movie.genres}</Box>
+                </Flex>
+              </Skeleton>
+
+              <Skeleton isLoaded={!isLoading}>
+                <Box d="flex" mt="1" alignItems="center">
+                  {Array(10)
+                    .fill("")
+                    .map((_, i) => (
+                      <Icon
+                        name="star"
+                        key={i}
+                        color={i < movie.avg ? "yellow.500" : "gray:300"}
+                      />
+                    ))}
+                  <Box as="span" ml="2">
+                    ({movie.avg.toString().substr(0, 4)})
+                  </Box>
+                  <Box as="span" ml="2" color="gray.600" fontSize="sm">
+                    {movie.count} reviews
+                  </Box>
+                </Box>
+              </Skeleton>
+              <Skeleton isLoaded={!isLoading}>
+                <Box>{movie.summary}</Box>
+              </Skeleton>
+            </Box>
+          </React.Fragment>
+        ))}
+      </SimpleGrid>
+      <Skeleton isLoaded={!isLoading}>
+        {localStorage.getItem("auth-token") ? (
+          <FormSwitch />
+        ) : (
+          <Box ml="1.5rem" mt="4">
+            Want to leave a review?&nbsp;
+            <Box as="span" color="teal.500">
+              <Login />.
+            </Box>
+          </Box>
+        )}
+      </Skeleton>
+    </>
   );
 };

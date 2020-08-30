@@ -24,11 +24,11 @@ async function get_rating(movieId, userId) {
   }
 }
 
-async function post_rating(movieId, userId, comment, rating) {
+async function post_rating(movieId, userId, headline, comment, rating) {
   try {
     const results = await pool.query(
-      "INSERT INTO ratings (movieId, userId, comment, rating) VALUES ($1,$2,$3,$4) RETURNING *",
-      [movieId, userId, comment, rating]
+      "INSERT INTO ratings (movieId, userId, headline, comment, rating) VALUES ($1,$2,$3,$4, $5) RETURNING *",
+      [movieId, userId, headline, comment, rating]
     );
     return results.rows;
   } catch (e) {

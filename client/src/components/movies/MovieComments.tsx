@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Box, Text, Divider, Icon, Skeleton } from "@chakra-ui/core";
 
 interface Comments {
   id: number;
@@ -9,10 +10,12 @@ interface Comments {
   rating: number;
   created_at: string;
   was_updated: boolean;
+  headline: string;
 }
 
 export const MovieComments: React.FC = () => {
   const [comments, setComments] = useState<Comments[]>([]);
+  const [isLoading, setLoading] = useState<boolean>(true);
 
   const handleResponse = (
     headers: Headers,
@@ -20,6 +23,7 @@ export const MovieComments: React.FC = () => {
     json: Comments[]
   ) => {
     if (status === 200) {
+      setLoading(false);
       setComments(json);
     }
   };
@@ -54,21 +58,44 @@ export const MovieComments: React.FC = () => {
   }, []);
 
   return (
-    <section>
+    <Box ml="1.5rem" mt="4">
+      <Skeleton isLoaded={!isLoading}>
+        <Text fontSize="xl">User Reviews</Text>
+      </Skeleton>
+
       {comments.map((comment) => (
-        <div key={comment.id}>
-          {comment.was_updated ? (
-            <p>
-              <i>(updated)</i>
-            </p>
-          ) : null}
-          <p>{comment.comment}</p>
-          <p>{comment.username}</p>
-          <p>{comment.rating}</p>
-          <p>{comment.created_at.substr(0, 10)}</p>
-          <hr />
-        </div>
+        <Box mt="2" key={comment.id}>
+          <Skeleton isLoaded={!isLoading}>
+            <Box fontWeight="semibold">{comment.headline}</Box>
+
+            <Box d="flex" fontSize="xs">
+              <Text>{comment.created_at.substr(0, 10)}</Text>
+              <Divider orientation="vertical" />
+              <Text>by {comment.username}</Text>
+            </Box>
+
+            <Box d="flex" mt="1" alignItems="center">
+              {Array(10)
+                .fill("")
+                .map((_, i) => (
+                  <Icon
+                    name="star"
+                    key={i}
+                    color={i < comment.rating ? "yellow.500" : "gray:300"}
+                  />
+                ))}
+            </Box>
+
+            {comment.was_updated ? (
+              <Text fontSize="xs" as="i">
+                (updated)
+              </Text>
+            ) : null}
+            <Text>{comment.comment}</Text>
+            <Divider orientation="horizontal" />
+          </Skeleton>
+        </Box>
       ))}
-    </section>
+    </Box>
   );
 };

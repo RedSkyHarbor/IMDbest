@@ -1,10 +1,12 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
+import { Text, Input, Button, Textarea, Icon } from "@chakra-ui/core";
 
 interface FormData {
   comment: string;
   rating: number;
+  headline: string;
 }
 
 export const UpdateCommentForm: React.FC<FormData> = (props) => {
@@ -16,7 +18,7 @@ export const UpdateCommentForm: React.FC<FormData> = (props) => {
     history.go(0);
   };
 
-  const onSubmit = handleSubmit(({ comment, rating }) => {
+  const onSubmit = handleSubmit(({ comment, rating, headline }) => {
     const movieId = localStorage.getItem("movie_id");
     const authToken = localStorage.getItem("auth-token") as string;
     const abortController = new AbortController();
@@ -42,23 +44,59 @@ export const UpdateCommentForm: React.FC<FormData> = (props) => {
 
   return (
     <form onSubmit={onSubmit}>
-      <h4>Update your review</h4>
-      <textarea
+      <Text mt="4" fontSize="xl">
+        Update your review
+      </Text>
+      <Input
+        defaultValue={props.headline}
+        name="headline"
+        type="text"
+        ref={register({ required: true, minLength: 3, maxLength: 64 })}
+      />
+      {errors.headline && errors.headline.type === "required" && (
+        <Text fontSize="xs" color="red.500">
+          <Icon name="warning-2" size="10px" mr="1" />
+          Leaving a headline is required
+        </Text>
+      )}
+      {errors.headline && errors.headline.type === "minLength" && (
+        <Text fontSize="xs" color="red.500">
+          <Icon name="warning-2" size="10px" mr="1" />
+          Headline must be at least 3 characters long
+        </Text>
+      )}
+      {errors.headline && errors.headline.type === "maxLength" && (
+        <Text fontSize="xs" color="red.500">
+          <Icon name="warning-2" size="10px" mr="1" />
+          Headline must be less than 64 characters long
+        </Text>
+      )}
+      <Textarea
+        mt="4"
         defaultValue={props.comment}
         name="comment"
         ref={register({ required: true, minLength: 3, maxLength: 2055 })}
       />
       {errors.comment && errors.comment.type === "required" && (
-        <span>Leaving a comment is required</span>
+        <Text fontSize="xs" color="red.500">
+          <Icon name="warning-2" size="10px" mr="1" />
+          Leaving a comment is required
+        </Text>
       )}
       {errors.comment && errors.comment.type === "minLength" && (
-        <span>Comment must be at least 3 characters long</span>
+        <Text fontSize="xs" color="red.500">
+          <Icon name="warning-2" size="10px" mr="1" />
+          Comment must be at least 3 characters long
+        </Text>
       )}
       {errors.comment && errors.comment.type === "maxLength" && (
-        <span>Comment must be less than 2055 characters long</span>
+        <Text fontSize="xs" color="red.500">
+          <Icon name="warning-2" size="10px" mr="1" />
+          Comment must be less than 2055 characters long
+        </Text>
       )}
       <br />
-      <input
+      <Input
         defaultValue={props.rating}
         type="number"
         step=".01"
@@ -68,10 +106,14 @@ export const UpdateCommentForm: React.FC<FormData> = (props) => {
         ref={register({ required: true })}
       />
       {errors.rating && errors.rating.type === "required" && (
-        <span>Leaving a rating is required</span>
+        <Text fontSize="xs" color="red.500">
+          <Icon name="warning-2" size="10px" mr="1" />
+          Leaving a rating is required
+        </Text>
       )}
-      <br />
-      <input type="submit" />
+      <Button mt="4" type="submit">
+        Submit
+      </Button>
     </form>
   );
 };

@@ -1,11 +1,23 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import {
+  Box,
+  InputGroup,
+  InputLeftElement,
+  InputRightElement,
+  FormControl,
+  Input,
+  Select,
+  Icon,
+} from "@chakra-ui/core/dist";
 
 interface Movies {
   id: number;
   title: string;
   slug: string;
   picture_url: string;
+  length: string;
+  genres: string;
   avg: number;
   count: number;
 }
@@ -36,19 +48,30 @@ export const SearchForm: React.FC<SearchProps> = (props) => {
   });
 
   return (
-    <>
+    <Box pt="4" margin="auto" ml="5rem" mr="5.5rem">
       <form onSubmit={onSubmit}>
-        <input
-          name="title"
-          placeholder="Search IMDbest"
-          type="text"
-          ref={register}
-        />
-        <select onChange={onSubmit} name="order" ref={register}>
-          <option value="asc">Avg rating ascending</option>
-          <option value="desc">Avg rating descending</option>
-        </select>
+        <FormControl>
+          <InputGroup size="md">
+            <InputLeftElement
+              children={<Icon name="search" color="gray.300" />}
+            />
+            <Input
+              name="title"
+              placeholder="Search IMDbest"
+              type="text"
+              ref={register}
+            />
+            <InputRightElement
+              children={
+                <Select onChange={onSubmit} name="order" ref={register}>
+                  <option value="asc">Avg rating ascending</option>
+                  <option value="desc">Avg rating descending</option>
+                </Select>
+              }
+            />
+          </InputGroup>
+        </FormControl>
       </form>
-    </>
+    </Box>
   );
 };

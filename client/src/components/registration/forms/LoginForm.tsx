@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { Box, FormLabel, Input, Button, Text, Icon } from "@chakra-ui/core";
 
 interface FormData {
   username: string;
@@ -65,41 +66,64 @@ export const LoginForm: React.FC = () => {
   });
 
   return (
-    <form onSubmit={onSubmit}>
-      <h1>Log in</h1>
-      {showNoLoginFound === true ? <p>Account not found</p> : null}
-      <label htmlFor="username">Username</label>
-      <input
-        name="username"
-        ref={register({ required: true, minLength: 3, maxLength: 31 })}
-      />
-      {errors.username && errors.username.type === "required" && (
-        <p>Username is required</p>
-      )}
-      {errors.username && errors.username.type === "minLength" && (
-        <p>Username must be at least 3 characters</p>
-      )}
-      {errors.username && errors.username.type === "maxLength" && (
-        <p>Username must be less than 31 characters</p>
-      )}
-      <br />
-      <label htmlFor="password">Password</label>
-      <input
-        name="password"
-        ref={register({ required: true, minLength: 5, maxLength: 256 })}
-        type="password"
-      />
-      {errors.password && errors.password.type === "required" && (
-        <p>Password is required</p>
-      )}
-      {errors.password && errors.password.type === "minLength" && (
-        <p>Password must be at least 5 characters</p>
-      )}
-      {errors.password && errors.password.type === "maxLength" && (
-        <p>Password must be less than 256 characters</p>
-      )}
-      <br />
-      <button type="submit">Log in</button>
-    </form>
+    <Box>
+      <form onSubmit={onSubmit}>
+        {showNoLoginFound === true ? (
+          <Text textAlign="center" color="red.500">
+            Account not found
+          </Text>
+        ) : null}
+        <FormLabel htmlFor="username">Username</FormLabel>
+        <Input
+          name="username"
+          ref={register({ required: true, minLength: 3, maxLength: 31 })}
+        />
+        {errors.username && errors.username.type === "required" && (
+          <Text fontSize="xs" color="red.500">
+            <Icon name="warning-2" size="10px" mr="1" />
+            Username is required
+          </Text>
+        )}
+        {errors.username && errors.username.type === "minLength" && (
+          <Text fontSize="xs" color="red.500">
+            <Icon name="warning-2" size="10px" mr="1" />
+            Username must be at least 3 characters
+          </Text>
+        )}
+        {errors.username && errors.username.type === "maxLength" && (
+          <Text fontSize="xs" color="red.500">
+            <Icon name="warning-2" size="10px" mr="1" />
+            Username must be less than 31 characters
+          </Text>
+        )}
+        <FormLabel htmlFor="password">Password</FormLabel>
+        <Input
+          name="password"
+          ref={register({ required: true, minLength: 5, maxLength: 256 })}
+          type="password"
+        />
+        {errors.password && errors.password.type === "required" && (
+          <Text fontSize="xs" color="red.500">
+            <Icon name="warning-2" size="10px" mr="1" />
+            Password is required
+          </Text>
+        )}
+        {errors.password && errors.password.type === "minLength" && (
+          <Text fontSize="xs" color="red.500">
+            <Icon name="warning-2" size="10px" mr="1" />
+            Password must be at least 5 characters
+          </Text>
+        )}
+        {errors.password && errors.password.type === "maxLength" && (
+          <Text fontSize="xs" color="red.500">
+            <Icon name="warning-2" size="10px" mr="1" />
+            Password must be less than 256 characters
+          </Text>
+        )}
+        <Button mt="6" width="100%" type="submit">
+          Log in
+        </Button>
+      </form>
+    </Box>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Text, Divider, Icon } from "@chakra-ui/core";
+import { Box, Text, Divider, Icon, Skeleton } from "@chakra-ui/core";
 
 interface Comments {
   id: number;
@@ -15,6 +15,7 @@ interface Comments {
 
 export const MovieComments: React.FC = () => {
   const [comments, setComments] = useState<Comments[]>([]);
+  const [isLoading, setLoading] = useState<boolean>(true);
 
   const handleResponse = (
     headers: Headers,
@@ -22,6 +23,7 @@ export const MovieComments: React.FC = () => {
     json: Comments[]
   ) => {
     if (status === 200) {
+      setTimeout(() => setLoading(false), 1000);
       setComments(json);
     }
   };
@@ -57,34 +59,38 @@ export const MovieComments: React.FC = () => {
 
   return (
     <Box ml="1.5rem" mt="4">
-      <Text fontSize="xl">User Reviews</Text>
+      <Skeleton isLoaded={!isLoading}>
+        <Text fontSize="xl">User Reviews</Text>
+      </Skeleton>
 
       {comments.map((comment) => (
-        <Box mt="2" key={comment.id}>
-          <Box fontWeight="semibold">{comment.headline}</Box>
+        <Skeleton isLoaded={!isLoading}>
+          <Box mt="2" key={comment.id}>
+            <Box fontWeight="semibold">{comment.headline}</Box>
 
-          <Box d="flex" fontSize="xs">
-            <Text>{comment.created_at.substr(0, 10)}</Text>
-            <Divider orientation="vertical" />
-            <Text>by {comment.username}</Text>
+            <Box d="flex" fontSize="xs">
+              <Text>{comment.created_at.substr(0, 10)}</Text>
+              <Divider orientation="vertical" />
+              <Text>by {comment.username}</Text>
+            </Box>
+
+            <Box d="flex" mt="1" alignItems="center">
+              {Array(10)
+                .fill("")
+                .map((_, i) => (
+                  <Icon
+                    name="star"
+                    key={i}
+                    color={i < comment.rating ? "teal.500" : "gray:300"}
+                  />
+                ))}
+            </Box>
+
+            {comment.was_updated ? <Text as="i">(updated)</Text> : null}
+            <Text>{comment.comment}</Text>
+            <Divider orientation="horizontal" />
           </Box>
-
-          <Box d="flex" mt="1" alignItems="center">
-            {Array(10)
-              .fill("")
-              .map((_, i) => (
-                <Icon
-                  name="star"
-                  key={i}
-                  color={i < comment.rating ? "teal.500" : "gray:300"}
-                />
-              ))}
-          </Box>
-
-          {comment.was_updated ? <Text as="i">(updated)</Text> : null}
-          <Text>{comment.comment}</Text>
-          <Divider orientation="horizontal" />
-        </Box>
+        </Skeleton>
       ))}
     </Box>
   );

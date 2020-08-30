@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { Login } from "../registration/Login";
+import { FormSwitch } from "../movies/forms/FormSwitch";
+
 import {
   Box,
   Flex,
@@ -127,6 +130,18 @@ export const MovieDetails: React.FC = () => {
           </React.Fragment>
         ))}
       </SimpleGrid>
+      <Skeleton isLoaded={!isLoading}>
+        {localStorage.getItem("auth-token") ? (
+          <FormSwitch />
+        ) : (
+          <Box ml="1.5rem" mt="4">
+            Want to leave a review?&nbsp;
+            <Box as="span" color="teal.500">
+              <Login />.
+            </Box>
+          </Box>
+        )}
+      </Skeleton>
     </>
   );
 };

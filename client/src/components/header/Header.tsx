@@ -2,14 +2,7 @@ import React from "react";
 import { Login } from "../registration/Login";
 import { Logout } from "../registration/Logout";
 import { Logo } from "./Logo";
-import { Box, Heading, Flex, Text, Button } from "@chakra-ui/core";
-
-// eslint-disable-next-line
-const MenuItems = ({ children }: any) => (
-  <Text mt={{ base: 4, md: 0 }} mr={6} display="block">
-    {children}
-  </Text>
-);
+import { PseudoBox, Heading, Flex, Text } from "@chakra-ui/core";
 
 export const Header = (props: any) => {
   return (
@@ -23,17 +16,21 @@ export const Header = (props: any) => {
       color="white"
       {...props}
     >
-      <Flex align="center" mr={5}>
+      <PseudoBox _hover={{ fontStyle: "italic" }} mr={5}>
         <Heading as="h1" size="lg">
           <Logo />
         </Heading>
-      </Flex>
+      </PseudoBox>
 
-      <Box>
-        <Button bg="transparent" border="1px">
-          {localStorage.getItem("auth-token") ? <Logout /> : <Login />}
-        </Button>
-      </Box>
+      <PseudoBox
+        rounded="md"
+        px={2}
+        py={1}
+        _hover={{ bg: "teal.200" }}
+        fontWeight="semibold"
+      >
+        {localStorage.getItem("auth-token") ? <Logout /> : <Login />}
+      </PseudoBox>
     </Flex>
   );
 };

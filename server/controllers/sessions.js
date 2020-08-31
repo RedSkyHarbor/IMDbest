@@ -22,6 +22,7 @@ const postRegistration = async (req, res) => {
   try {
     let { username, password, email, is_admin } = await req.body;
     result.response = await registration(username, password, email, is_admin);
+    console.log(`Registration response: ${result.response}`);
     if (result.response[0].id) {
       const token = jwt.sign(
         {
@@ -36,6 +37,7 @@ const postRegistration = async (req, res) => {
   } catch (e) {
     result.response = false;
   } finally {
+    res.status(200);
     res.header("content-type", "application/json");
     res.send(JSON.stringify(result));
   }

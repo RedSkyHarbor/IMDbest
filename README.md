@@ -10,6 +10,8 @@ Create an account, then rate your favorite movies. A lot like IMDb, but this one
 
 [Typescript](typescriptlang.org) - JS superset with type checking
 
+[Chakra UI](https://chakra-ui.com/) - Component library that utilizes inclusive design
+
 [Express.js](https://expressjs.com/) - Node library
 
 [Postgresql](https://www.postgresql.org/) - Database

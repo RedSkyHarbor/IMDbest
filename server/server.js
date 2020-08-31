@@ -8,6 +8,12 @@ const movies = require("./routes/movies");
 const sessions = require("./routes/sessions");
 const ratings = require("./routes/ratings");
 
+// Configure cors to only accept requests from our client
+const corsOptions = {
+  origin: "https://imdbest.herokuapp.com/",
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
 const port = process.env.PORT || 5000;
 const app = express();
 

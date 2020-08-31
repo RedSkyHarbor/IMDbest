@@ -63,7 +63,7 @@ export const MovieCards: React.FC = () => {
             key={movie.id}
           >
             <Skeleton isLoaded={!isLoading}>
-              <Link to={`/movie/${movie.id}/${movie.slug}`}>
+              <Link tabIndex={-1} to={`/movie/${movie.id}/${movie.slug}`}>
                 <Image
                   minW="xs"
                   maxW="xs"

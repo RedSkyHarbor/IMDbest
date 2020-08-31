@@ -9,11 +9,11 @@ const sessions = require("./routes/sessions");
 const ratings = require("./routes/ratings");
 
 // Configure cors to only accept requests from our client
-// const origin = new RegExp("https://imdbest.herokuapp.com/(.*)");
-// const corsOptions = {
-//   origin: "https://imdbest.herokuapp.com/",
-//   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-// };
+const origin = new RegExp("https://imdbest.herokuapp.com.*");
+const corsOptions = {
+  origin: origin,
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
 
 const port = process.env.PORT || 5000;
 const app = express();

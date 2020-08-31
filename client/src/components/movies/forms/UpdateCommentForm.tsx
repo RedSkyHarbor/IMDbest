@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { Text, Input, Button, Textarea, Icon } from "@chakra-ui/core";
 
 interface FormData {
+  movie_id: string;
   comment: string;
   rating: number;
   headline: string;
@@ -19,7 +20,7 @@ export const UpdateCommentForm: React.FC<FormData> = (props) => {
   };
 
   const onSubmit = handleSubmit(({ comment, rating, headline }) => {
-    const movieId = localStorage.getItem("movie_id");
+    const movieId = props.movie_id;
     const authToken = localStorage.getItem("auth-token") as string;
     const abortController = new AbortController();
     const signal = abortController.signal;

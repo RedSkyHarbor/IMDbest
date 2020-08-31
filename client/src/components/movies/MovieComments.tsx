@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Box, Text, Divider, Icon, Skeleton } from "@chakra-ui/core";
 
+interface MovieCommentsProps {
+  movie_id: string;
+}
+
 interface Comments {
   id: number;
   movieid: number;
@@ -13,7 +17,7 @@ interface Comments {
   headline: string;
 }
 
-export const MovieComments: React.FC = () => {
+export const MovieComments: React.FC<MovieCommentsProps> = (props) => {
   const [comments, setComments] = useState<Comments[]>([]);
   const [isLoading, setLoading] = useState<boolean>(true);
 
@@ -29,7 +33,7 @@ export const MovieComments: React.FC = () => {
   };
 
   useEffect(() => {
-    const movieId = localStorage.getItem("movie_id");
+    const movieId = props.movie_id;
     const abortController = new AbortController();
     const signal = abortController.signal;
     fetch("/api/ratings/" + movieId, {
@@ -55,7 +59,7 @@ export const MovieComments: React.FC = () => {
     return () => {
       abortController.abort();
     };
-  }, []);
+  }, [props.movie_id]);
 
   return (
     <Box ml="1.5rem" mt="4">

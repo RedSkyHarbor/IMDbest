@@ -40,10 +40,6 @@ export const MovieCards: React.FC = () => {
     };
   }, []);
 
-  const setLocalStorage = (id: string) => {
-    localStorage.setItem("movie_id", id);
-  };
-
   const handleSubmit = (movies: Movies[]) => {
     setMovies(movies);
   };
@@ -67,10 +63,7 @@ export const MovieCards: React.FC = () => {
             key={movie.id}
           >
             <Skeleton isLoaded={!isLoading}>
-              <Link
-                to={`/movie/${movie.slug}`}
-                onClick={() => setLocalStorage(movie.id.toString())}
-              >
+              <Link to={`/movie/${movie.id}/${movie.slug}`}>
                 <Image
                   minW="xs"
                   maxW="xs"
@@ -97,10 +90,7 @@ export const MovieCards: React.FC = () => {
 
               <Skeleton isLoaded={!isLoading}>
                 <Box mt="1" fontWeight="semibold" lineHeight="tight">
-                  <Link
-                    to={`/movie/${movie.slug}`}
-                    onClick={() => setLocalStorage(movie.id.toString())}
-                  >
+                  <Link to={`/movie/${movie.id}/${movie.slug}`}>
                     {movie.title}
                   </Link>
                 </Box>

@@ -3,7 +3,11 @@ import { UpdateCommentForm } from "./UpdateCommentForm";
 import { CommentForm } from "./CommentForm";
 import { Box } from "@chakra-ui/core";
 
-export const FormSwitch: React.FC = () => {
+interface FormSwitchProps {
+  movie_id: string;
+}
+
+export const FormSwitch: React.FC<FormSwitchProps> = (props) => {
   let [isFirstComment, setIsFirstComment] = useState<boolean>(false);
   let [isFetchFinished, setFetchFinished] = useState<boolean>(false);
   let [comment, setComment] = useState<string>("");
@@ -23,7 +27,7 @@ export const FormSwitch: React.FC = () => {
   };
 
   useEffect(() => {
-    const movieId = localStorage.getItem("movie_id");
+    const movieId = props.movie_id;
     const authToken = localStorage.getItem("auth-token") as string;
     const abortController = new AbortController();
     const signal = abortController.signal;
@@ -45,7 +49,7 @@ export const FormSwitch: React.FC = () => {
     return () => {
       abortController.abort();
     };
-  }, []);
+  }, [props.movie_id]);
 
   // Wait for fetch to finish
   if (isFetchFinished === false) {
@@ -55,9 +59,10 @@ export const FormSwitch: React.FC = () => {
   return (
     <Box mr="1.5rem" ml="1.5rem">
       {isFirstComment ? (
-        <CommentForm />
+        <CommentForm movie_id={props.movie_id} />
       ) : (
         <UpdateCommentForm
+          movie_id={props.movie_id}
           headline={headline}
           comment={comment}
           rating={rating}

@@ -12,6 +12,10 @@ import {
   Skeleton,
 } from "@chakra-ui/core";
 
+interface MovieDetailsProps {
+  movie_id: string;
+}
+
 interface Movie {
   id: number;
   title: string;
@@ -26,7 +30,7 @@ interface Movie {
   count: number;
 }
 
-export const MovieDetails: React.FC = () => {
+export const MovieDetails: React.FC<MovieDetailsProps> = (props) => {
   let [movie, setMovie] = useState<Movie[]>([]);
   let [isLoading, setLoading] = useState<boolean>(true);
 
@@ -36,7 +40,7 @@ export const MovieDetails: React.FC = () => {
   };
 
   useEffect(() => {
-    const movieId = localStorage.getItem("movie_id");
+    const movieId = props.movie_id;
     const abortController = new AbortController();
     const signal = abortController.signal;
 
@@ -51,7 +55,7 @@ export const MovieDetails: React.FC = () => {
     return () => {
       abortController.abort();
     };
-  }, []);
+  }, [props.movie_id]);
 
   return (
     <>
@@ -132,7 +136,7 @@ export const MovieDetails: React.FC = () => {
       </SimpleGrid>
       <Skeleton isLoaded={!isLoading}>
         {localStorage.getItem("auth-token") ? (
-          <FormSwitch />
+          <FormSwitch movie_id={props.movie_id} />
         ) : (
           <Box ml="1.5rem" mt="4">
             Want to leave a review?&nbsp;

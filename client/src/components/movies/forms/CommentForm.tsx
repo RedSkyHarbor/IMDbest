@@ -3,15 +3,19 @@ import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { Text, Input, Button, Textarea, Icon } from "@chakra-ui/core";
 
+interface CommentFormProps {
+  movie_id: string;
+}
+
 interface FormData {
   comment: string;
   headline: string;
   rating: number;
 }
 
-export const CommentForm: React.FC = () => {
+export const CommentForm: React.FC<CommentFormProps> = (props) => {
   const { register, handleSubmit, errors } = useForm<FormData>();
-  const movieId = localStorage.getItem("movie_id");
+  const movieId = props.movie_id;
   const authToken = localStorage.getItem("auth-token") as string;
   let history = useHistory();
 

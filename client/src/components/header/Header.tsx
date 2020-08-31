@@ -2,7 +2,7 @@ import React from "react";
 import { Login } from "../registration/Login";
 import { Logout } from "../registration/Logout";
 import { Logo } from "./Logo";
-import { PseudoBox, Heading, Flex, Text } from "@chakra-ui/core";
+import { PseudoBox, Heading, Flex } from "@chakra-ui/core";
 
 export const Header = (props: any) => {
   return (

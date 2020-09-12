@@ -1,14 +1,9 @@
 import React from "react";
-import { render } from "@testing-library/react";
 import { FormSwitch } from "../FormSwitch";
-import { ThemeProvider } from "@chakra-ui/core";
+import { renderWithTheme } from "../../../setupTestUtils";
 
 describe("<CommentForm />", () => {
   it("smoke test", () => {
-    render(
-      <ThemeProvider>
-        <FormSwitch movie_id="1" />
-      </ThemeProvider>
-    );
+    renderWithTheme(<FormSwitch movie_id="1" />);
   });
 });

@@ -1,17 +1,14 @@
 import React from "react";
-import { render } from "@testing-library/react";
 import { MovieDetails } from "../MovieDetails";
-import { ThemeProvider } from "@chakra-ui/core";
 import { MemoryRouter } from "react-router-dom";
+import { renderWithTheme } from "../../../setupTestUtils";
 
 describe("<MovieDetails />", () => {
   it("smoke test", () => {
-    render(
-      <ThemeProvider>
-        <MemoryRouter>
-          <MovieDetails movie_id="1" />
-        </MemoryRouter>
-      </ThemeProvider>
+    renderWithTheme(
+      <MemoryRouter>
+        <MovieDetails movie_id="1" />
+      </MemoryRouter>
     );
   });
 });

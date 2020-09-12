@@ -1,11 +1,11 @@
 import React from "react";
-import { render } from "@testing-library/react";
 import { Header } from "../Header";
 import { MemoryRouter } from "react-router-dom";
+import { renderWithTheme } from "../../../setupTestUtils";
 
 describe("<Header />", () => {
   it("smoke test", () => {
-    render(
+    renderWithTheme(
       <MemoryRouter>
         <Header />
       </MemoryRouter>

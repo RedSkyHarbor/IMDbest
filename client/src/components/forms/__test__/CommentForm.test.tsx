@@ -5,8 +5,10 @@ import { ThemeProvider } from "@chakra-ui/core";
 
 describe("<CommentForm />", () => {
   it("smoke test", () => {
-    <ThemeProvider>
-      <CommentForm movie_id="1" />
-    </ThemeProvider>;
+    render(
+      <ThemeProvider>
+        <CommentForm movie_id="1" />
+      </ThemeProvider>
+    );
   });
 });

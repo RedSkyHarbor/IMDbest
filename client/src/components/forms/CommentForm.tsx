@@ -45,7 +45,7 @@ export const CommentForm: React.FC<CommentFormProps> = (props) => {
 
   return (
     <form onSubmit={onSubmit}>
-      <Text role="alert" mt="4" fontSize="xl">
+      <Text mt="4" fontSize="xl">
         Leave a review
       </Text>
       <Input

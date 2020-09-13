@@ -36,6 +36,7 @@ export const UpdateCommentForm: React.FC<FormData> = (props) => {
       body: JSON.stringify({
         comment: comment,
         rating: rating,
+        headline: headline,
       }),
     })
       .then((res) => res.json())
@@ -45,7 +46,7 @@ export const UpdateCommentForm: React.FC<FormData> = (props) => {
 
   return (
     <form onSubmit={onSubmit}>
-      <Text role="alert" mt="4" fontSize="xl">
+      <Text mt="4" fontSize="xl">
         Update your review
       </Text>
       <Input

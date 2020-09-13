@@ -18,6 +18,12 @@ Create an account, then rate your favorite movies. A lot like IMDb, but this one
 
 [Heroku](https://www.heroku.com/) - Deployed
 
+## Tested with
+
+[Jest](https://jestjs.io/) - Test runner
+
+[React testing library](https://testing-library.com/docs/react-testing-library/intro) - Testing utility for react
+
 ## Design Points
 
 This repo contains two npm projects, the backend server and the frontend UI. So there are two `package.json` configs and therefore two places to run `npm` commands

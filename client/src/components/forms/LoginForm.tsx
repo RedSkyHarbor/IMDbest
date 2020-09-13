@@ -69,7 +69,7 @@ export const LoginForm: React.FC = () => {
     <Box>
       <form onSubmit={onSubmit}>
         {showNoLoginFound === true ? (
-          <Text textAlign="center" color="red.500">
+          <Text role="alert" textAlign="center" color="red.500">
             Account not found
           </Text>
         ) : null}

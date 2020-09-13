@@ -45,7 +45,7 @@ export const CommentForm: React.FC<CommentFormProps> = (props) => {
 
   return (
     <form onSubmit={onSubmit}>
-      <Text mt="4" fontSize="xl">
+      <Text role="alert" mt="4" fontSize="xl">
         Leave a review
       </Text>
       <Input
@@ -55,19 +55,19 @@ export const CommentForm: React.FC<CommentFormProps> = (props) => {
         ref={register({ required: true, minLength: 3, maxLength: 64 })}
       />
       {errors.headline && errors.headline.type === "required" && (
-        <Text fontSize="xs" color="red.500">
+        <Text role="alert" fontSize="xs" color="red.500">
           <Icon name="warning-2" size="10px" mr="1" />
           Leaving a headline is required
         </Text>
       )}
       {errors.headline && errors.headline.type === "minLength" && (
-        <Text fontSize="xs" color="red.500">
+        <Text role="alert" fontSize="xs" color="red.500">
           <Icon name="warning-2" size="10px" mr="1" />
           Headline must be at least 3 characters long
         </Text>
       )}
       {errors.headline && errors.headline.type === "maxLength" && (
-        <Text fontSize="xs" color="red.500">
+        <Text role="alert" fontSize="xs" color="red.500">
           <Icon name="warning-2" size="10px" mr="1" />
           Headline must be less than 64 characters long
         </Text>
@@ -80,19 +80,19 @@ export const CommentForm: React.FC<CommentFormProps> = (props) => {
         ref={register({ required: true, minLength: 3, maxLength: 2055 })}
       />
       {errors.comment && errors.comment.type === "required" && (
-        <Text fontSize="xs" color="red.500">
+        <Text role="alert" fontSize="xs" color="red.500">
           <Icon name="warning-2" size="10px" mr="1" />
           Leaving a comment is required
         </Text>
       )}
       {errors.comment && errors.comment.type === "minLength" && (
-        <Text fontSize="xs" color="red.500">
+        <Text role="alert" fontSize="xs" color="red.500">
           <Icon name="warning-2" size="10px" mr="1" />
           Comment must be at least 3 characters long
         </Text>
       )}
       {errors.comment && errors.comment.type === "maxLength" && (
-        <Text fontSize="xs" color="red.500">
+        <Text role="alert" fontSize="xs" color="red.500">
           <Icon name="warning-2" size="10px" mr="1" />
           Comment must be less than 2055 characters long
         </Text>
@@ -107,7 +107,7 @@ export const CommentForm: React.FC<CommentFormProps> = (props) => {
         ref={register({ required: true })}
       />
       {errors.rating && errors.rating.type === "required" && (
-        <Text fontSize="xs" color="red.500">
+        <Text role="alert" fontSize="xs" color="red.500">
           <Icon name="warning-2" size="10px" mr="1" />
           Leaving a rating is required
         </Text>

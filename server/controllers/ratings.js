@@ -71,6 +71,7 @@ const updateRating = async (req, res) => {
 
   const validator = new Validator(req.body, {
     comment: "required|string|minLength:3|maxLength:2055",
+    headline: "required|string|minLength:3|maxLength:64",
     rating: "required|decimal",
     userId: "required|decimal",
   });
@@ -89,8 +90,14 @@ const updateRating = async (req, res) => {
 
   let result = {};
   try {
-    const { comment, rating } = req.body;
-    result.response = await update_rating(movieId, userId, comment, rating);
+    const { comment, rating, headline } = req.body;
+    result.response = await update_rating(
+      movieId,
+      userId,
+      headline,
+      comment,
+      rating
+    );
   } catch (e) {
     result.response = false;
     res.status(400);

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { LoginForm } from "../components/registration/forms/LoginForm";
-import { SignUpForm } from "../components/registration/forms/SignUpForm";
+import { LoginForm } from "../components/forms/LoginForm";
+import { SignUpForm } from "../components/forms/SignUpForm";
 import { CustomRadio } from "../components/registration/CustomRadio";
 import { Header } from "../components/header/Header";
 import { Flex, Box, RadioButtonGroup } from "@chakra-ui/core";

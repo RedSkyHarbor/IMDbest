@@ -69,7 +69,7 @@ export const LoginForm: React.FC = () => {
     <Box>
       <form onSubmit={onSubmit}>
         {showNoLoginFound === true ? (
-          <Text textAlign="center" color="red.500">
+          <Text role="alert" textAlign="center" color="red.500">
             Account not found
           </Text>
         ) : null}
@@ -79,19 +79,19 @@ export const LoginForm: React.FC = () => {
           ref={register({ required: true, minLength: 3, maxLength: 31 })}
         />
         {errors.username && errors.username.type === "required" && (
-          <Text fontSize="xs" color="red.500">
+          <Text role="alert" fontSize="xs" color="red.500">
             <Icon name="warning-2" size="10px" mr="1" />
             Username is required
           </Text>
         )}
         {errors.username && errors.username.type === "minLength" && (
-          <Text fontSize="xs" color="red.500">
+          <Text role="alert" fontSize="xs" color="red.500">
             <Icon name="warning-2" size="10px" mr="1" />
             Username must be at least 3 characters
           </Text>
         )}
         {errors.username && errors.username.type === "maxLength" && (
-          <Text fontSize="xs" color="red.500">
+          <Text role="alert" fontSize="xs" color="red.500">
             <Icon name="warning-2" size="10px" mr="1" />
             Username must be less than 31 characters
           </Text>
@@ -103,19 +103,19 @@ export const LoginForm: React.FC = () => {
           type="password"
         />
         {errors.password && errors.password.type === "required" && (
-          <Text fontSize="xs" color="red.500">
+          <Text role="alert" fontSize="xs" color="red.500">
             <Icon name="warning-2" size="10px" mr="1" />
             Password is required
           </Text>
         )}
         {errors.password && errors.password.type === "minLength" && (
-          <Text fontSize="xs" color="red.500">
+          <Text role="alert" fontSize="xs" color="red.500">
             <Icon name="warning-2" size="10px" mr="1" />
             Password must be at least 5 characters
           </Text>
         )}
         {errors.password && errors.password.type === "maxLength" && (
-          <Text fontSize="xs" color="red.500">
+          <Text role="alert" fontSize="xs" color="red.500">
             <Icon name="warning-2" size="10px" mr="1" />
             Password must be less than 256 characters
           </Text>

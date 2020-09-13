@@ -36,11 +36,11 @@ async function post_rating(movieId, userId, headline, comment, rating) {
   }
 }
 
-async function update_rating(movieId, userId, comment, rating) {
+async function update_rating(movieId, userId, headline, comment, rating) {
   try {
     const results = await pool.query(
-      "UPDATE ratings SET comment=$1, rating=$2, was_updated=True WHERE movieId=$3 AND userId=$4 RETURNING *",
-      [comment, rating, movieId, userId]
+      "UPDATE ratings SET comment=$1, rating=$2, headline=$3, was_updated=True WHERE movieId=$4 AND userId=$5 RETURNING *",
+      [comment, rating, headline, movieId, userId]
     );
     return results.rows;
   } catch (e) {

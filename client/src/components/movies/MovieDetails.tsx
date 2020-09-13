@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Login } from "../registration/Login";
-import { FormSwitch } from "../movies/forms/FormSwitch";
+import { FormSwitch } from "../forms/FormSwitch";
 
 import {
   Box,

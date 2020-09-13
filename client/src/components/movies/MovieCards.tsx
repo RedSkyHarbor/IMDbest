@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { SearchForm } from "./forms/SearchForm";
+import { SearchForm } from "../forms/SearchForm";
 import { Link } from "react-router-dom";
 import { Box, Image, Icon, SimpleGrid, Skeleton } from "@chakra-ui/core/dist";
 
